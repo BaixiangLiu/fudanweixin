@@ -1,4 +1,4 @@
-eduweixin
+fudanweixin
 =========
 This is a We-chat public account service system based on Java 6.
 
