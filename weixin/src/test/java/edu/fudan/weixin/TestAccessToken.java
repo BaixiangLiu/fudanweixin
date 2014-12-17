@@ -9,7 +9,7 @@ public class TestAccessToken {
 	
 	@Test
 	public void testAccessToken() {
-		System.out.println(AccessTokenHelper.getInstance().getToken(0));
+		System.out.println(AccessTokenHelper.getInstance().getToken(AccessTokenHelper.TAC));
 	}
 
 }

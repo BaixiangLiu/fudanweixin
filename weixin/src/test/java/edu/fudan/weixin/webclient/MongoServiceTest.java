@@ -12,9 +12,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
-
 import edu.fudan.eservice.common.utils.EncodeHelper;
 import edu.fudan.webclient.entity.IMongoEntity;
 import edu.fudan.webclient.entity.WebUserEntity;
@@ -73,7 +70,6 @@ public class MongoServiceTest {
 
 	/**
 	* @Title: print
-	* @Description: TODO
 	* @param list
 	*/
 	private void print(List<IMongoEntity> list) {

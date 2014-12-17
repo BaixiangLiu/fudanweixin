@@ -32,10 +32,10 @@ public class TestMessage {
 	
 	public void testKB() throws Exception
 	{
-		Map<String,Object> msg=buildTxtMsg("kb��Ϣ��");
+		Map<String,Object> msg=buildTxtMsg("kb信息办");
 		System.out.println(CommonUtil.postWebRequest(urlstr, WeixinMessageHelper.xml2str(WeixinMessageHelper.dbo2xml(msg)).getBytes("utf-8"), "application/xml; charset=utf-8"));
 	}
-	//@Test
+	@Test
 	public void testBalance() throws Exception
 	{
 		Map<String,Object> msg=buildTxtMsg("ykt");
@@ -59,12 +59,12 @@ public class TestMessage {
 	
 	@Test
 	public void testLesson() throws Exception {
-		Map<String,Object> msg = buildTxtMsg("ѡ�β�ѯ091");
+		Map<String,Object> msg = buildTxtMsg("课程091");
 		System.out.println(CommonUtil.postWebRequest(urlstr, WeixinMessageHelper.xml2str(WeixinMessageHelper.dbo2xml(msg)).getBytes("utf-8"), "application/xml; charset=utf-8"));
 	}
 	
 	public void testschoolbus() throws Exception {
-		Map<String,Object> msg = buildTxtMsg("У��jh");
+		Map<String,Object> msg = buildTxtMsg("校车jh");
 		System.out.println(CommonUtil.postWebRequest(urlstr, WeixinMessageHelper.xml2str(WeixinMessageHelper.dbo2xml(msg)).getBytes("utf-8"), "application/xml; charset=utf-8"));
 		
 	}

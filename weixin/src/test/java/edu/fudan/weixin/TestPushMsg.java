@@ -20,7 +20,7 @@ import edu.fudan.eservice.common.utils.MongoUtil;
 import edu.fudan.weixin.model.TACOAuth2Model;
 import edu.fudan.weixin.utils.BindingHelper;
 
-public class NewClient {
+public class TestPushMsg {
 
 	
 	public void newclient() throws NoSuchAlgorithmException
@@ -50,7 +50,7 @@ public class NewClient {
 		Object balance=((DBObject)l.get(0)).get("card_balance")+"Ԫ";
 		Object username=((DBObject)l.get(0)).get("username")+" ("+uid+")";
 		
-		DBObject data=new BasicDBObject("url",Config.getInstance().get("weixin.context")).append("first", "��ֹ2014��9��16��24ʱ���һ��ͨ���������£�").append("name", username).append("money", balance).append("remark", "������ʱ��ͨ��һ��ͨ��վ��Ȧ������������ֵ��");
+		DBObject data=new BasicDBObject("url",Config.getInstance().get("weixin.context")).append("first", "目前账号余额").append("name", username).append("money", balance).append("remark", "本消息仅供测试");
 		long now=System.currentTimeMillis();
 		String userenc=EncodeHelper.bytes2hex(EncodeHelper.encrypt("DESede", (pass+now).getBytes(),EncodeHelper.hex2bytes(enckey),null));
 		DBObject head=new BasicDBObject("template","ecard_balance").append("touser", uid).append("timestamp", now).append("clientid", clientid)

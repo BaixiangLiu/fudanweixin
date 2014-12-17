@@ -12,7 +12,7 @@ public class TestFollower {
 	@Test
 	public void test() {
 		//fail("Not yet implemented");
-		System.out.println(AccessTokenHelper.getInstance().getToken(AccessTokenHelper.TAC));
+		//System.out.println(AccessTokenHelper.getInstance().getToken(AccessTokenHelper.TAC));
 		WeixinFollowerHelper.FetchAllWeixinFollowers("");
 		//new WeixinFollowerHelper().SetAllFollowersUnSubscribed();
 		//new WeixinFollowerHelper().FetchAllWeixinFollowers("");
