@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<bean type="edu.fudan.eservice.common.struts.EserviceDateConverter"
+		name="struts" class="edu.fudan.eservice.common.struts.EserviceDateConverter"
+		scope="singleton" />
+	<constant name="struts.action.extension" value="act" />
+	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
+
+	<constant name="struts.convention.classes.reload" value="true" />
+
+	<constant name="struts.configuration.xml.reload" value="false" />
+	<constant name="struts.i18n.reload" value="false" />
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+
+	<constant name="struts.multipart.maxSize" value="20971520000" />
+	<constant name="struts.url.includeParams" value="none" />
+
+
+	<constant name="struts.convention.action.mapAllMatches" value="true" />
+
+	<constant name="struts.convention.package.locators" value="actions" />
+	<constant name="struts.ognl.allowStaticMethodAccess" value="true" />
+	<constant name="struts.custom.i18n.resources" value="globalMessage" />
+
+
+	<!-- Add packages here -->
+	<package name="servicebase" namespace="/" extends="json-default">
+
+		<interceptors>
+			<interceptor name="log"
+				class="edu.fudan.eservice.common.struts.LogInterceptor" />
+			<interceptor name="uis"
+				class="edu.fudan.eservice.common.struts.UISInterceptor" />
+			
+			<interceptor-stack name="guest">
+				<!-- <interceptor-ref name="log" /> -->
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="log" />
+			</interceptor-stack>
+			<interceptor-stack name="user">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="log" />
+				<interceptor-ref name="uis" />
+			</interceptor-stack>
+			
+
+		</interceptors>
+
+		<default-interceptor-ref name="guest" />
+
+		<global-results>
+			<result name="error" type="dispatcher">/common/error.jsp</result>
+			<result name="invalid.token" type="dispatcher">/common/error.jsp</result>
+			<result name="privilege" type="dispatcher">/common/privilege.jsp</result>
+		</global-results>
+
+		<global-exception-mappings>
+			<exception-mapping result="error" exception="java.lang.Throwable" />
+		</global-exception-mappings>
+
+	</package>
+</struts>
