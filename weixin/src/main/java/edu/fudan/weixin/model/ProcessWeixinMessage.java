@@ -87,7 +87,7 @@ public class ProcessWeixinMessage {
 				String decstr=crypt.decryptMsg(msgsig, timestamp, nonce, reqsb.toString());
 				obj=WeixinMessageHelper.xml2dbo(new SAXBuilder().build(new StringReader(decstr)));
 				//log.info(decstr);
-			}else if(WeixinMessageHelper.checksum(signature, timestamp, nonce))
+			}else if(WeixinMessageHelper.checksum(signature, timestamp, nonce)||"127.0.0.1".equals(request.getRemoteAddr()))
 			{
 				obj=WeixinMessageHelper.stream2dbo(request.getInputStream());
 			}

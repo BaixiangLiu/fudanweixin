@@ -27,6 +27,7 @@ public class TestOAuth2Model {
 	@Test
 	public void testscore(){
 		DBObject bd=getBD();
+		System.out.println(bd.get("openid"));
 		TACOAuth2Model om=new TACOAuth2Model();
 		System.out.println(om.score(bd,"2009201002"));	
 	}

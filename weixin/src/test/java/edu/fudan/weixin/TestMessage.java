@@ -22,14 +22,14 @@ public class TestMessage {
 	private Map<String,Object> buildEventMsg(String key)
 	{
 		Map<String,Object> ret=new HashMap<String,Object>();
-		ret.put("FromUserName","oew-cuDIYJFk31yYJMFKAw6Iy1oU");
+		ret.put("FromUserName","oew-cuP8H1G_B2a-Rx4q5_Z3TEeA");
 		ret.put("MsgType", "event");
 		ret.put("Event", "CLICK");
 		ret.put("EventKey", key);
 		return ret;
 	}
 	
-	
+	@Test
 	public void testKB() throws Exception
 	{
 		Map<String,Object> msg=buildTxtMsg("kb信息办");
