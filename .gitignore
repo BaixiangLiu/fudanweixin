@@ -16,3 +16,5 @@ hs_err_pid*
 Servers/
 .metadata/
 .recommenders/
+*.project
+weixin/src/main/resources/dbconnect.properties
