@@ -88,7 +88,7 @@ public class BindAction extends GuestActionBase {
 					// addActionMessage("UIS已经绑定为" + userinfo.get("user_id"));
 					// } else {
 					// 重定向到复旦TAC的授权页面
-					org.apache.struts2.ServletActionContext.getResponse().sendRedirect("https://tac.fudan.edu.cn/oauth2/authorize.act?response_type=code&scope=" + URLEncoder.encode(conf.get("tac.scope"), "utf-8") + "&client_id=" + conf.get("tac.clientid") + "&redirect_uri=" + URLEncoder.encode(conf.get("tac.redirecturi"), "utf-8") + "&state=" + EncodeHelper.bytes2hex(EncodeHelper.encrypt("AES", obj.get("openid").toString().getBytes(), EncodeHelper.hex2bytes(conf.get("tac.enckey")), null)));
+					org.apache.struts2.ServletActionContext.getResponse().sendRedirect(conf.get("tac.codeurl")+"?response_type=code&scope=" + URLEncoder.encode(conf.get("tac.scope"), "utf-8") + "&client_id=" + conf.get("tac.clientid") + "&redirect_uri=" + URLEncoder.encode(conf.get("tac.redirecturi"), "utf-8") + "&state=" + EncodeHelper.bytes2hex(EncodeHelper.encrypt("AES", obj.get("openid").toString().getBytes(), EncodeHelper.hex2bytes(conf.get("tac.enckey")), null)));
 					return NONE;
 					// }
 				} else {

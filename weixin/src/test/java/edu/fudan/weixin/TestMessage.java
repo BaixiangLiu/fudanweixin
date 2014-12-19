@@ -12,8 +12,7 @@ public class TestMessage {
 	private static String urlstr="http://localhost:8080/weixin/message";
 	private Map<String,Object> buildTxtMsg(String content)
 	{
-		Map<String,Object> ret=new HashMap<String,Object>();
-		//ret.put("FromUserName","oew-cuDIYJFk31yYJMFKAw6Iy1oU");
+		Map<String,Object> ret=new HashMap<String,Object>();		
 		ret.put("FromUserName", "oew-cuP8H1G_B2a-Rx4q5_Z3TEeA");
 		ret.put("MsgType", "text");
 		ret.put("Content",content);

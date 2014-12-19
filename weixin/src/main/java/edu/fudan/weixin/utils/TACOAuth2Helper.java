@@ -25,7 +25,7 @@ public class TACOAuth2Helper {
 	
 	@SuppressWarnings("unchecked")
 	public static Map<String, Object> fetchUser(String accesstoken) {
-		String urlstr = "https://tac.fudan.edu.cn/resource/userinfo.act?access_token="
+		String urlstr = Config.getInstance().get("tac.userinfourl")+"?access_token="
 				+ accesstoken;
 		try {
 			Map<String, Object> ret = (Map<String, Object>) JSON
@@ -99,7 +99,7 @@ public class TACOAuth2Helper {
 	public static Map<String, Object> getToken(String code, boolean isrefresh) {
 		Config conf = Config.getInstance();
 		try {
-			String urlstr = "https://tac.fudan.edu.cn/oauth2/token.act?client_id="
+			String urlstr = conf.get("tac.tokenurl")+"?client_id="
 					+ conf.get("tac.clientid")
 					+ "&client_secret="
 					+ URLEncoder.encode(conf.get("tac.secret"), "utf-8");
@@ -136,7 +136,7 @@ public class TACOAuth2Helper {
 	public static Map<String, Object> revokeToken(String access_token) {
 		Config conf = Config.getInstance();
 		try {
-			String urlstr = "https://tac.fudan.edu.cn/oauth2/token.act?client_id="
+			String urlstr = conf.get("tac.tokenurl")+"?client_id="
 					+ conf.get("tac.clientid")
 					+ "&client_secret="
 					+ URLEncoder.encode(conf.get("tac.secret"), "utf-8");
