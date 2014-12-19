@@ -11,6 +11,7 @@ import com.mongodb.DBObject;
 
 import edu.fudan.eservice.common.utils.CommonUtil;
 import edu.fudan.eservice.common.utils.MongoUtil;
+import edu.fudan.eservice.common.utils.OAuth2Helper;
 import edu.fudan.weixin.utils.TACOAuth2Helper;
 
 
@@ -52,7 +53,7 @@ public class TACOAuth2Model {
 					robj=method.invoke(null, narg);					
 					
 				} else if (!CommonUtil.isEmpty(dbo.get("uisrefresh"))) {
-					Map<String, Object> newtk = TACOAuth2Helper.getToken(dbo
+					Map<String, Object> newtk = OAuth2Helper.getToken(dbo
 							.get("uisrefresh").toString(), true);
 					if (newtk != null) {
 						if (!CommonUtil.isEmpty(newtk.get("access_token"))) {
@@ -199,6 +200,6 @@ public class TACOAuth2Model {
 	 */
 	public DBObject getToken(String code, boolean isrefresh) {
 
-		return new BasicDBObject(TACOAuth2Helper.getToken(code, isrefresh));
+		return new BasicDBObject(OAuth2Helper.getToken(code, isrefresh));
 	}
 }

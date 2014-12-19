@@ -28,6 +28,7 @@ import edu.fudan.eservice.common.utils.CommonUtil;
 import edu.fudan.eservice.common.utils.Config;
 import edu.fudan.eservice.common.utils.EncodeHelper;
 import edu.fudan.eservice.common.utils.MongoUtil;
+import edu.fudan.eservice.common.utils.OAuth2Helper;
 import edu.fudan.weixin.utils.TACOAuth2Helper;
 
 @ParentPackage(value = "servicebase")
@@ -112,7 +113,7 @@ public class BindAction extends GuestActionBase {
 		// 获取access_token
 
 		try {
-			Map<String, Object> retobj = TACOAuth2Helper.getToken(code, false);
+			Map<String, Object> retobj = OAuth2Helper.getToken(code, false);
 			Object acctk = retobj.get("access_token");
 			if (!CommonUtil.isEmpty(acctk)) {
 				DBCollection c = MongoUtil.getInstance().getDB().getCollection("Bindings");
