@@ -3,6 +3,7 @@ package edu.fudan.weixin.actions;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.ehcache.Cache;
@@ -26,6 +27,7 @@ import edu.fudan.eservice.common.utils.CommonUtil;
 import edu.fudan.eservice.common.utils.Config;
 import edu.fudan.eservice.common.utils.EncodeHelper;
 import edu.fudan.eservice.common.utils.MongoUtil;
+import edu.fudan.weixin.model.TemplateMessage;
 
 @ParentPackage("servicebase")
 @Namespace("/")
@@ -76,33 +78,16 @@ public class MsgpushAction extends GuestActionBase {
 						{
 							if(db.getCollection("Books").findOne(new BasicDBObject("openid",user.get("openid")).append("item", head.get("template")).append("book"	, true))!=null)
 							{
-							DBObject msg=db.getCollection("Templates").findOne(new BasicDBObject("name",head.get("template")));
-							if(!CommonUtil.isEmpty(msg))
-							{
-								msg.removeField("name");
-								msg.removeField("_id");
-								msg.put("touser", user.get("openid"));
-								DBObject data=(DBObject)req.get("data");
-								if(!CommonUtil.isEmpty(data.get("url")))
-									msg.put("url", data.get("url"));
-								DBObject msgdata=(DBObject)(msg.get("data"));
-								for(String k:msgdata.keySet())
-								{
-									Object v=data.get(k);
-									if(!CommonUtil.isEmpty(v))
-									((DBObject)(msgdata.get(k))).put("value",  v);
-								}	
-								log.info(JSON.serialize(msg));
-								 ret=CommonUtil.postWebRequest("https://api.weixin.qq.com/cgi-bin/message/template/send?access_token="+Config.getInstance().get("weixin.access_token"), JSON.serialize(msg).getBytes("utf-8"), null);
-								 DBObject retobj=(DBObject)JSON.parse(ret.toString());
+								String cret=TemplateMessage.send(String.valueOf(head.get("template")), String.valueOf(user.get("openid")), (DBObject)req.get("data"));
+								if(cret!=null && cret.startsWith("{")){
+								DBObject retobj=(DBObject)JSON.parse(cret);
 								 retobj.put("touser", touser);
 								 retobj.put("timestamp", timestamp);
 								 retobj.put("clientid", clientid);
 								 db.getCollection("Pushmsgs").save(retobj);
+								}else
+									errormsg=cret; 
 							}else
-							{
-								errormsg="Template not found";
-							}}else
 							{
 								errormsg="Message not booked";
 							}

@@ -1,5 +1,8 @@
 package edu.fudan.weixin.actions;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
@@ -23,9 +26,10 @@ public class BookAction extends GuestActionBase {
 	 * 
 	 */
 	private static final long serialVersionUID = 6289673478650624253L;
-	private Object[] items;
+	private Map<String,Object> items;
 	private String item;
 	private boolean book;
+	private float threshold;
 	private OperateResult result;
 	@Action("book")
 	public String execute()
@@ -45,13 +49,14 @@ public class BookAction extends GuestActionBase {
 				DBObject o=c.findOne(dbo);
 				if(book&&CommonUtil.isEmpty(o))
 				{
-					c.save(dbo.append("booktime", System.currentTimeMillis()).append("book", book));
+					c.save(dbo.append("booktime", System.currentTimeMillis()).append("book", book).append("threshold", threshold));
 				}
 				if(!CommonUtil.isEmpty(o))
 				{
 					if(!CommonUtil.eq(o.get("book"), book)){
 					o.put("booktime", System.currentTimeMillis());
-					o.put("book", book);					
+					o.put("book", book);	
+					o.put("threshold",threshold);
 					c.save(o);
 					}
 				}
@@ -65,18 +70,21 @@ public class BookAction extends GuestActionBase {
 	{
 		Object openid=getSession().get("openid");
 		DBCursor cs=MongoUtil.getInstance().getDB().getCollection("Books").find(new BasicDBObject("openid",openid).append("book",true));
-		items=new Object[cs.count()];
+		items=new HashMap<String,Object>();
 		int i=0;
 		while(cs.hasNext())
 		{
-			items[i++]=cs.next().get("item");
+			DBObject obj=cs.next();
+			items.put(obj.get("item").toString(), obj.get("threshold"));
 		}
+		
 		return SUCCESS;
 	}
-	public Object[] getItems() {
+	
+	public Map<String, Object> getItems() {
 		return items;
 	}
-	public void setItems(Object[] items) {
+	public void setItems(Map<String, Object> items) {
 		this.items = items;
 	}
 	public String getItem() {
@@ -96,6 +104,12 @@ public class BookAction extends GuestActionBase {
 	}
 	public void setResult(OperateResult result) {
 		this.result = result;
+	}
+	public float getThreshold() {
+		return threshold;
+	}
+	public void setThreshold(float threshold) {
+		this.threshold = threshold;
 	}
 	
 }

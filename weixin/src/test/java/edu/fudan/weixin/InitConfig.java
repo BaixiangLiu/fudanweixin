@@ -69,6 +69,10 @@ public class InitConfig {
 		//账号绑定请求的用户信息url
 		c.save(new BasicDBObject("key","tac.userinfourl").append("value",""));
 		
+		//Kafka接口地址
+		c.save(new BasicDBObject("key","kafka.servers").append("value", ""));
+		//Kafka处理消息线程数，建议与Kafka上监听的消息的Partition数一致
+		c.save(new BasicDBObject("key","kafka.servers").append("value",2));
 		
 	}
 
