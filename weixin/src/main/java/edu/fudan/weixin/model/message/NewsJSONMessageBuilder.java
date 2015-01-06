@@ -47,6 +47,9 @@ public class NewsJSONMessageBuilder extends JSONMessageBuilder implements NewsMe
 		article.put("picurl",picurl);
 		articles.add(article);
 	}
-	
+	@Override
+	public int getCount() {
+		return articles.size();
+	}
 
 }

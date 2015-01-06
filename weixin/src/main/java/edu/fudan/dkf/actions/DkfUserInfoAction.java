@@ -36,7 +36,6 @@ public class DkfUserInfoAction extends GuestActionBase {
 		return SUCCESS;
 	}
 
-	
 	public IMongoEntity getEntity() {
 		return entity;
 	}

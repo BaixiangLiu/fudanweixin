@@ -20,6 +20,8 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
+import edu.fudan.eservice.common.utils.Config;
+
 /**
  * @author: Calvinyang
  * @Description: TODO
@@ -32,9 +34,6 @@ public class BstProxyAction extends CrawlerBase {
 	private InputStream inputStream;
 	private String contentType;
 
-	private static final String BaseUrl = "http://localhost:8080/fdweixin/crawler/bst.act?targetUrl=";
-	private static final String SearchUrl = "http://localhost:8080/fdweixin/crawler/search.act";
-
 	@Override
 	@Action(value = "bst", results = { @Result(type = "stream") })
 	public String execute() throws Exception {
@@ -42,8 +41,7 @@ public class BstProxyAction extends CrawlerBase {
 		if (targetUrl == null) {
 			targetUrl = "http://baishitong.fudan.edu.cn/index.php?title=%E9%A6%96%E9%A1%B5";
 		} else {
-			String s = new String(targetUrl.getBytes("ISO-8859-1"),"UTF-8");
-			targetUrl = "http://baishitong.fudan.edu.cn/index.php?title=" + s;
+			targetUrl = "http://baishitong.fudan.edu.cn/index.php?title=" + targetUrl;
 		}
 		targetUrl += "&mobileaction=toggle_view_mobile";
 		StringBuffer retstr = fetch(targetUrl);
@@ -55,7 +53,7 @@ public class BstProxyAction extends CrawlerBase {
 		while (m.find()) {
 			String link = m.group();
 			if (link.startsWith("/wiki")) {
-				html2 = html2.replace(link, BaseUrl + URLEncoder.encode(link.substring(6), "UTF-8"));
+				html2 = html2.replace(link, Config.getInstance().get("bstProxy.baseUrl") + URLEncoder.encode(link.substring(6), "UTF-8"));
 			}
 		}
 		p = Pattern.compile("(?<=action=\").*?(?=\")");
@@ -63,18 +61,19 @@ public class BstProxyAction extends CrawlerBase {
 		while(m.find()) {
 			String link = m.group();
 			if (link.equals("/index.php")) {
-				html2 = html2.replace(link, SearchUrl);
+				html2 = html2.replace(link, Config.getInstance().get("bstProxy.searchUrl"));
 			}
 		}
 		inputStream = new ByteArrayInputStream(html2.getBytes("UTF-8"));
+		System.gc();
 		return SUCCESS;
 	}
 
 	@Action(value = "search", results = { @Result(type = "stream") })
 	public String search() throws Exception {
 		String query = ServletActionContext.getRequest().getParameter("search");
-		query = new String(query.getBytes("ISO-8859-1"),"UTF-8");
-		String targetUrl = "http://baishitong.fudan.edu.cn/index.php?title=%E7%89%B9%E6%AE%8A:%E6%90%9C%E7%B4%A2&search=" + query + "&fulltext=search&mobileaction=toggle_view_mobile";
+		//query = new String(query.getBytes("ISO-8859-1"),"UTF-8");
+		String targetUrl = "http://baishitong.fudan.edu.cn/index.php?title=%E7%89%B9%E6%AE%8A:%E6%90%9C%E7%B4%A2&search=" + URLEncoder.encode(query, "utf-8") + "&fulltext=search&mobileaction=toggle_view_mobile";
 		StringBuffer retstr = fetch(targetUrl);
 		// 内链处理
 		String html = retstr.toString();
@@ -84,10 +83,11 @@ public class BstProxyAction extends CrawlerBase {
 		while (m.find()) {
 			String link = m.group();
 			if (link.startsWith("/wiki")) {
-				html2 = html2.replace(link, BaseUrl + URLEncoder.encode(link.substring(6), "UTF-8"));
+				html2 = html2.replace(link, Config.getInstance().get("bstProxy.baseUrl") + URLEncoder.encode(link.substring(6), "UTF-8"));
 			}
 		}
 		inputStream = new ByteArrayInputStream(html2.getBytes("UTF-8"));
+		System.gc();
 		return SUCCESS;
 	}
 	
@@ -110,7 +110,7 @@ public class BstProxyAction extends CrawlerBase {
 	 * @return the contentType
 	 */
 	public String getContentType() {
-		return "text/html";
+		return "text/html; charset=UTF-8";
 	}
 
 	/**

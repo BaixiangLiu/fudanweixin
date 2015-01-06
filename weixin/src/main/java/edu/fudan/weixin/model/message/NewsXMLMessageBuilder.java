@@ -60,6 +60,9 @@ public class NewsXMLMessageBuilder extends TextMessageBuilder implements NewsMes
 		articles.add(article);
 		
 	}
-	
+	@Override
+	public int getCount() {
+		return articles.size();
+	}
 
 }
