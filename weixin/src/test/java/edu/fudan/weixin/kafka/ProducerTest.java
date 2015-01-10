@@ -34,10 +34,10 @@ public class ProducerTest {
 		
 		Producer<String,String> p=new Producer<String,String>(new ProducerConfig(conf));
 		String topic="ecardtest";
-		for (int i=0;i<20;i++){
+		for (int i=0;i<4;i++){
 			EcardConsume ec=new EcardConsume();
-			ec.setAmount(new Random().nextInt(20));
-			ec.setCardbefbal(100);
+			ec.setAmount(new Random().nextInt(40));
+			ec.setCardbefbal(40);
 			ec.setCardaftbal(ec.getCardbefbal()-ec.getAmount());
 			ec.setStuempno("09110240017");
 			ec.setCustname("王彬");

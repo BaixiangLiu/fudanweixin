@@ -1,7 +1,5 @@
 package edu.fudan.weixin.model;
 
-import java.io.UnsupportedEncodingException;
-
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBObject;

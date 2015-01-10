@@ -12,7 +12,7 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 
 /**
- * 从数据库中同步Config数据，每分钟从数据库中更新
+ * 从数据库中同步Config数据，每20s从数据库中更新
  * @author wking
  *
  */

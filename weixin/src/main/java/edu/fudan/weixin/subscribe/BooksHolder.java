@@ -26,8 +26,9 @@ import edu.fudan.eservice.common.utils.ThreadPoolHelper;
 public class BooksHolder {
 
 	private static final Map<String, Map<String, Object>> books = new HashMap<String, Map<String, Object>>();
-	public static final BooksHolder INSTANCE = new BooksHolder();
 	private static ReadWriteLock lock = new ReentrantReadWriteLock();
+	public static final BooksHolder INSTANCE = new BooksHolder();
+	
 
 	protected BooksHolder() {
 		super();
