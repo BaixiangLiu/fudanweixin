@@ -12,6 +12,7 @@ import edu.fudan.eservice.common.utils.CommonUtil;
 import edu.fudan.eservice.common.utils.Config;
 import edu.fudan.eservice.common.utils.MongoUtil;
 import edu.fudan.weixin.model.TACOAuth2Model;
+import edu.fudan.weixin.model.message.JSONMessageBuilder;
 import edu.fudan.weixin.model.message.NewsJSONMessageBuilder;
 import edu.fudan.weixin.model.message.NewsMessageBuilder;
 import edu.fudan.weixin.model.message.StaticMessageBuilder;
@@ -42,18 +43,18 @@ public class BalanceMessageProcessor extends LongTermProcessor {
 			return null;
 	}
 
-	public Map<String, Object> _process(Map<String, Object> message) {
+	public JSONMessageBuilder _process(Map<String, Object> message) {
 
 		Object openid = message.get("FromUserName");
 		DBCollection coll = MongoUtil.getInstance().getDB()
 				.getCollection("Bindings");
 		DBObject dbo = coll.findOne(new BasicDBObject("openid", openid));
 		if (dbo == null || CommonUtil.isEmpty(dbo.get("binds")))
-			return StaticMessageBuilder.buildJSONAuthMessage();
+			return StaticMessageBuilder.authBuilder();
 	
 		TACOAuth2Model om = new TACOAuth2Model();
 		BasicDBList ls=om.yktxx(dbo);		
-		NewsMessageBuilder mb = new NewsJSONMessageBuilder();
+		NewsJSONMessageBuilder mb = new NewsJSONMessageBuilder();
 		StringBuffer info = new StringBuffer();
 		for (int i = 0; i < ls.size(); i++) {
 			DBObject uis = (DBObject) ls.get(i);
@@ -80,9 +81,9 @@ public class BalanceMessageProcessor extends LongTermProcessor {
 		if (info.length() > 0) {
 			mb.addArticle("一卡通信息", info.toString(), Config.getInstance().get("weixin.context")+"wxlogin.act?redir=ecard.act", "");
 			mb.setContent(null);
-			return mb.getMessage();
+			return mb;
 		} else
-			return StaticMessageBuilder.buildJSONAuthMessage();
+			return StaticMessageBuilder.authBuilder();
 
 	}
 

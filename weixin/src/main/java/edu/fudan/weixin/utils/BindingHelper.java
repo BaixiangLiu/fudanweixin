@@ -14,10 +14,13 @@ public class BindingHelper {
 
 	public static Object getBinding(String openid)
 	{
-		if(!CommonUtil.isEmpty(openid))
-			return MongoUtil.getInstance().getDB()
-		.getCollection("Bindings").findOne(new BasicDBObject("openid",openid)).get("binds");
-		else
+		if(!CommonUtil.isEmpty(openid)){
+			DBObject user= MongoUtil.getInstance().getDB()
+		.getCollection("Bindings").findOne(new BasicDBObject("openid",openid));
+			if(!CommonUtil.isEmpty(user)&&!CommonUtil.isEmpty(user.get("binds")))
+				return user.get("binds");
+		}
+		
 			return new BasicDBList();
 	}
 	@SuppressWarnings("unchecked")

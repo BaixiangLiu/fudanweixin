@@ -27,7 +27,7 @@ public class UnbindMessageProcessor extends LongTermProcessor {
 		else
 			return null;
 	}
-	public Map<String, Object> _process(Map<String, Object> message) {
+	public JSONMessageBuilder _process(Map<String, Object> message) {
 		{
 			Object openid=message.get("FromUserName");
 			DBCollection coll=MongoUtil.getInstance().getDB().getCollection("Bindings");
@@ -42,7 +42,7 @@ public class UnbindMessageProcessor extends LongTermProcessor {
 			}
 			JSONMessageBuilder mb=new JSONMessageBuilder();
 			mb.setContent(msg);
-			return mb.getMessage();
+			return mb;
 		}
 	}
 

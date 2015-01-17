@@ -12,12 +12,23 @@ import java.util.Map;
  */
 public class NewsJSONMessageBuilder extends JSONMessageBuilder implements NewsMessageBuilder{
 
-	private List<Map<String,Object>> articles;
+	private List<Map<String,String>> articles;
+	
+	public TextMessageBuilder toXMLMessageBuilder()
+	{
+		NewsXMLMessageBuilder builder=new NewsXMLMessageBuilder();
+		for(Map<String,String> news:articles)
+		{
+			builder.addArticle(news.get("title"), news.get("description"), news.get("url"), news.get("picurl"));
+		}
+		builder.setContent(null);
+		return builder;
+	}
 	
 	public NewsJSONMessageBuilder() {
 		super();
 		set("msgtype","news");
-		articles=new ArrayList<Map<String,Object>>();
+		articles=new ArrayList<Map<String,String>>();
 	}
 	/**
 	 * 
@@ -40,7 +51,7 @@ public class NewsJSONMessageBuilder extends JSONMessageBuilder implements NewsMe
 	
 	public void addArticle(String title,String description, String url, String picurl)
 	{
-		Map<String,Object> article=new HashMap<String,Object>();
+		Map<String,String> article=new HashMap<String,String>();
 		article.put("title",title);
 		article.put("description", description);
 		article.put("url", url);

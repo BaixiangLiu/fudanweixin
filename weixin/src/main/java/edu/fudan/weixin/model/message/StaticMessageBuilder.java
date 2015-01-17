@@ -13,6 +13,13 @@ import edu.fudan.eservice.common.utils.Config;
 
 public class StaticMessageBuilder {
 
+	public static NewsJSONMessageBuilder authBuilder()
+	{
+		NewsJSONMessageBuilder ret=new NewsJSONMessageBuilder();
+		buildAuthMessage(ret);
+		return ret;
+	}
+	
 	public static Map<String,Object> buildXMLAuthMessage()
 	{
 		return buildAuthMessage(new NewsXMLMessageBuilder());

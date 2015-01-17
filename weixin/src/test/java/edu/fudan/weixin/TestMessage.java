@@ -29,6 +29,13 @@ public class TestMessage {
 	}
 	
 	@Test
+	public void testPhoneyp() throws Exception
+	{
+		Map<String,Object> msg=buildTxtMsg("dh信息办");
+		System.out.println(CommonUtil.postWebRequest(urlstr, WeixinMessageHelper.xml2str(WeixinMessageHelper.dbo2xml(msg)).getBytes("utf-8"), "application/xml; charset=utf-8"));
+	}
+	
+	@Test
 	public void testKB() throws Exception
 	{
 		Map<String,Object> msg=buildTxtMsg("kb信息办");

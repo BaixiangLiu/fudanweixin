@@ -1,6 +1,9 @@
 package edu.fudan.weixin.model.message;
 
 import java.util.HashMap;
+import java.util.Map;
+
+import edu.fudan.eservice.common.utils.CommonUtil;
 
 /**
  * 生成客服接口使用的消息对象
@@ -13,7 +16,17 @@ public class JSONMessageBuilder extends TextMessageBuilder {
 		super();	
 	}
 	
-	
+	public TextMessageBuilder toXMLMessageBuilder()
+	{
+		TextMessageBuilder text=new TextMessageBuilder();
+		Object textobj=message.get("text");
+		if(!CommonUtil.isEmpty(textobj)&&textobj instanceof Map)
+		{
+			text.setContent(((Map)textobj).get("content"));
+		}
+		return text;
+		
+	}
 	
 	
 	/**

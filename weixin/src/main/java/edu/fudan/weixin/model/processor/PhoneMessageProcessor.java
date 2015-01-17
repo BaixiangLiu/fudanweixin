@@ -31,7 +31,7 @@ public class PhoneMessageProcessor extends LongTermProcessor {
 				return null;
 		}
 			
-	public Map<String, Object> _process(Map<String, Object> message) {
+	public JSONMessageBuilder _process(Map<String, Object> message) {
 			String qkey=null;
 			String 	content = String.valueOf(message.get("Content"));
 			if (!CommonUtil.isEmpty(content)){
@@ -46,7 +46,7 @@ public class PhoneMessageProcessor extends LongTermProcessor {
 			{
 				
 				jb.setContent("请使用语言或者文字输入 电话、dh或phone开头接着要查询的部门或者号码末位（至少四位）\n如：电话信息办 或 phone3207");
-				return jb.getMessage();
+				return jb;
 			}
 			
 
@@ -80,18 +80,19 @@ public class PhoneMessageProcessor extends LongTermProcessor {
 					}
 				}
 				jb.setContent(ret.toString());
-				return jb.getMessage();
+				
 				}else
 				{
 					
 					jb.setContent("通过您提供的关键字"+qkey+"我们没有查询到相关的记录");
-					return jb.getMessage();
+					
 				}
 			}else
 			{
 			
 				jb.setContent("TAC服务器没有返回数据，请稍候再试");
-				return jb.getMessage();
+				
 			}
+			return jb;
 	}
 }

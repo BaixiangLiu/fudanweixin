@@ -9,6 +9,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import edu.fudan.eservice.common.utils.CommonUtil;
+import edu.fudan.weixin.model.message.JSONMessageBuilder;
 import edu.fudan.weixin.model.message.NewsJSONMessageBuilder;
 import edu.fudan.weixin.model.message.NewsMessageBuilder;
 
@@ -34,7 +35,7 @@ public class KBMessageProcessor extends LongTermProcessor {
 	}
 	
 	@Override
-	public Map<String, Object> _process(Map<String, Object> message) {
+	public JSONMessageBuilder _process(Map<String, Object> message) {
 		
 				String content = String.valueOf(message.get("Content"));
 			
@@ -50,7 +51,7 @@ public class KBMessageProcessor extends LongTermProcessor {
 						StringBuffer ret=CommonUtil.getWebContent(urlstr);
 						
 						int pos=ret.indexOf("mw-search-result-heading");
-						NewsMessageBuilder mb=new NewsJSONMessageBuilder();
+						NewsJSONMessageBuilder mb=new NewsJSONMessageBuilder();
 						int atcount=0;
 						while(pos>0&&atcount<10)
 						{
@@ -86,7 +87,7 @@ public class KBMessageProcessor extends LongTermProcessor {
 					if(atcount==0)
 						mb.addArticle("没有查询到相关内容", "Nothing was found", "", "");
 					mb.setContent(null);
-					return mb.getMessage();
+					return mb;
 
 					} catch (Exception ex) {
 						log.error(ex);

@@ -17,7 +17,9 @@ import edu.fudan.eservice.common.utils.CommonUtil;
 import edu.fudan.nlp.cn.tag.CWSTagger;
 import edu.fudan.nlp.corpus.StopWords;
 import edu.fudan.util.exception.LoadModelException;
+import edu.fudan.weixin.model.message.JSONMessageBuilder;
 import edu.fudan.weixin.model.message.NewsMessageBuilder;
+import edu.fudan.weixin.model.message.TextMessageBuilder;
 import edu.fudan.weixin.utils.BstSearchHelper;
 
 /**
@@ -37,7 +39,7 @@ public class SemanticMessageProcessor extends LongTermProcessor {
 	}
 
 	@Override
-	public Map<String, Object> _process(Map<String, Object> msg) {
+	public JSONMessageBuilder _process(Map<String, Object> msg) {
 		String content = String.valueOf(msg.get("Content"));
 		// 调用复旦关键词提取
 		StringBuffer sb = new StringBuffer();
@@ -57,7 +59,7 @@ public class SemanticMessageProcessor extends LongTermProcessor {
 			sb.append(content);
 		}
 		NewsMessageBuilder builder = BstSearchHelper.getNewsForKeywords(sb.toString().trim());
-		return builder == null || builder.getCount() == 1 ? null : builder.getMessage();
+		return builder == null || builder.getCount() == 1 ? null : (JSONMessageBuilder)builder;
 	}
 	
 }
