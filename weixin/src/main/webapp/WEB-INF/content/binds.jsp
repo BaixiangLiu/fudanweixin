@@ -22,7 +22,7 @@
 					<s:actionerror />
 					
 					<table class="table table-striped table-condensed">
-					<s:iterator value="@edu.fudan.weixin.utils.BindingHelper@getBinding(#session.openid)">
+					<s:iterator value="binds">
 					<tr><td><a href="bindlist.act?uisid=<s:property value="uisid" />"><s:property value="uisid" /></a></td><td><s:property value="username" /></td><td><s:property value="usertype"/></td>
 					<td><a class="btn btn-warning btn-sm"  href="unbind.act?uisid=<s:property value="uisid" />" >解除绑定</a></td>
 					</tr>

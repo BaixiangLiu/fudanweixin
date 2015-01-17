@@ -105,7 +105,7 @@
 							id="qform">
 							<div class="form-group">
 								<s:select
-									list="@edu.fudan.weixin.utils.BindingHelper@getBinding(#session.openid)"
+									list="binds"
 									cssClass="selectpicker" name="uisid"
 									listValue="uisid+' ('+username+' )'" listKey="uisid" />
 							</div>
