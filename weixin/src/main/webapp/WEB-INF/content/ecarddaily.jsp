@@ -77,7 +77,7 @@
 					<div class="panel-heading">
 					<form class="form-inline" role="form" onsubmit="return subform()" id="qform">
 					<div class="form-group">					
-					<s:select list="@edu.fudan.weixin.utils.BindingHelper@getBinding(#session.openid)" cssClass="input-sm form-control" name="uisid" listValue="uisid+' ('+username+' )'" listKey="uisid" />
+					<s:select list="binds" cssClass="input-sm form-control" name="uisid" listValue="uisid+' ('+username+' )'" listKey="uisid" />
 					</div>
 					<div class="form-group">
 					<div class="input-daterange input-group" id="datepicker">

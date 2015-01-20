@@ -18,7 +18,8 @@ import edu.fudan.weixin.utils.BindingHelper;
 @Actions({
 	@Action(value="binds",results={@Result(location="binds.jsp")}),
 	@Action(value="score",results={@Result(location="score.jsp")}),
-	@Action(value="lesson",results={@Result(location="lesson.jsp")})
+	@Action(value="lesson",results={@Result(location="lesson.jsp")}),
+	@Action(value="ecarddaily",results={@Result(location="ecarddaily.jsp")})
 	})
 public class BindsAction extends GuestActionBase{
 

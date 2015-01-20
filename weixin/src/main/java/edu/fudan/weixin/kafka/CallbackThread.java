@@ -21,13 +21,10 @@ public class CallbackThread implements Runnable {
 			String topic = mm.topic();
 			final Set<ConsumeCallback> cbs = callbacks.get(topic);
 			if (cbs != null) {
-				ThreadPoolHelper.getInstance().getSchPool()
-						.submit(new Thread() {
-							public void run() {
+				
 								for (ConsumeCallback cb : cbs)
 									cb.process(mm);
-							}
-						});
+						
 			}
 		}
 	}

@@ -19,25 +19,30 @@ public class EcardCallback extends PrintCallback {
 		
 		
 		
-		EcardConsume consume=JSON.parseObject(m.message(), EcardConsume.class);
-		Object obj=BooksHolder.INSTANCE.getItem(consume.getStuempno(), "ecard_consume");
-		String openid=BooksHolder.INSTANCE.getOpenid(consume.getStuempno());
+		
+		
+		Object obj=BooksHolder.INSTANCE.getItem(m.key(), "ecard_consume");
+		String openid=BooksHolder.INSTANCE.getOpenid(m.key());
+		EcardConsume consume=null;
 		if (obj instanceof Number)
 		{
+			consume=JSON.parseObject(m.message(), EcardConsume.class);
 			if(consume.getAmount()>((Number)obj).floatValue())
 			{
 				sendConsume(consume,openid);
 			}
 		}
-		obj=BooksHolder.INSTANCE.getItem(consume.getStuempno(), "ecard_low");
+		obj=BooksHolder.INSTANCE.getItem(m.key(), "ecard_low");
 		if (obj instanceof Number)
 		{
+			if(consume==null)
+				consume=JSON.parseObject(m.message(), EcardConsume.class);
 			if(consume.getCardaftbal()<((Number)obj).floatValue())
 			{
 				sendLow(consume,openid);
 			}
 		}
-		
+		if(consume!=null)
 		log.info(consume);
 		
 
@@ -60,7 +65,7 @@ public class EcardCallback extends PrintCallback {
 		data.put("keyword5", consume.getCardaftbal()+"元");
 		data.put("remark", "本提醒不作为入账凭证，最终交易结果和余额以一卡通系统为准。");
 		
-		log.debug(TemplateMessage.send("ecard_consume", openid, data));
+		log.info(TemplateMessage.send("ecard_consume", openid, data));
 		
 	}
 	private void sendLow(EcardConsume consume,String openid){
@@ -71,7 +76,7 @@ public class EcardCallback extends PrintCallback {
 		
 		data.put("money", consume.getCardaftbal()+"元");
 		data.put("remark", "为了不影响您的正常消费请及时充值。");		
-		log.debug(TemplateMessage.send("ecard_low", openid, data));
+		log.info(TemplateMessage.send("ecard_low", openid, data));
 		
 	}
 	@Override

@@ -221,6 +221,33 @@ public class TACOAuth2Helper {
 		return new HashMap<String, Object>();
 
 	}
+	/**
+	 * 废除access_token，即解绑
+	 * 
+	 * @param access_token
+	 * @return
+	 */
+	public static Map<String, Object> revokeToken(String access_token) {
+		Config conf = Config.getInstance();
+		try {
+			String urlstr = "https://tac.fudan.edu.cn/oauth2/token.act?client_id="
+					+ conf.get("tac.clientid")
+					+ "&client_secret="
+					+ URLEncoder.encode(conf.get("tac.secret"), "utf-8");
+
+			urlstr += "&grant_type=revoke_token&access_token=" + access_token;
+
+			String ret;
+
+			ret = CommonUtil.getWebContent(urlstr).toString();
+			Map<String, Object> retobj = (Map<String, Object>) JSON.parse(ret);
+			return retobj;
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return new HashMap<String, Object>();
+	}
+
 	
 	/*
 	public static String startclass(int startclass) {
