@@ -70,7 +70,7 @@ function setbook(item,obj,threshold)
 					</label> <input type="text" class="input-sm form-control"
 						id="consume_threshold" style="width: 65px; display: inline"
 						value="<s:property value="items.get('ecard_consume')==null?'20':items.get('ecard_consume')" />"
-						onchange="setbook('ecard_low',$('#consume_check')[0],this.value)" /><label>元时</label>
+						onchange="setbook('ecard_consume',$('#consume_check')[0],this.value)" /><label>元时</label>
 				</div>
 			</div>
 		</div>

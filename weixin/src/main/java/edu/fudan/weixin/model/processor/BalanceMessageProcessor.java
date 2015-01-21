@@ -14,7 +14,6 @@ import edu.fudan.eservice.common.utils.MongoUtil;
 import edu.fudan.weixin.model.TACOAuth2Model;
 import edu.fudan.weixin.model.message.JSONMessageBuilder;
 import edu.fudan.weixin.model.message.NewsJSONMessageBuilder;
-import edu.fudan.weixin.model.message.NewsMessageBuilder;
 import edu.fudan.weixin.model.message.StaticMessageBuilder;
 
 /**

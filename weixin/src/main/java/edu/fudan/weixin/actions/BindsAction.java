@@ -36,7 +36,7 @@ public class BindsAction extends GuestActionBase{
 		if(!CommonUtil.isEmpty(openid))
 			binds=BindingHelper.getBinding(String.valueOf(openid));
 		else
-			binds=new ArrayList();
+			binds=new ArrayList<String>();
 		return SUCCESS;
 	}
 

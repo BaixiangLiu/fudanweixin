@@ -23,7 +23,6 @@ import edu.fudan.weixin.model.TemplateMessage;
 public class DailyBalanceThread implements Runnable {
 
 	private static Log log=LogFactory.getLog(DailyBalanceThread.class);
-	@SuppressWarnings("unchecked")
 	@Override
 	public void run() {
 		

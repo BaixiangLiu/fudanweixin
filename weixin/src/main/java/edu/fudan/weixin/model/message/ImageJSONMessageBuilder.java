@@ -12,6 +12,7 @@ import edu.fudan.eservice.common.utils.CommonUtil;
  */
 public class ImageJSONMessageBuilder extends JSONMessageBuilder {
 
+	@SuppressWarnings("rawtypes")
 	public TextMessageBuilder toXMLMessageBuilder()
 	{
 		ImageMessageBuilder text=new ImageMessageBuilder();

@@ -16,6 +16,7 @@ public class JSONMessageBuilder extends TextMessageBuilder {
 		super();	
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public TextMessageBuilder toXMLMessageBuilder()
 	{
 		TextMessageBuilder text=new TextMessageBuilder();

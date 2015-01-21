@@ -19,7 +19,6 @@ import edu.fudan.nlp.corpus.StopWords;
 import edu.fudan.util.exception.LoadModelException;
 import edu.fudan.weixin.model.message.JSONMessageBuilder;
 import edu.fudan.weixin.model.message.NewsMessageBuilder;
-import edu.fudan.weixin.model.message.TextMessageBuilder;
 import edu.fudan.weixin.utils.BstSearchHelper;
 
 /**

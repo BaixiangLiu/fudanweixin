@@ -10,7 +10,7 @@ import com.mongodb.DBObject;
 import edu.fudan.eservice.common.utils.CommonUtil;
 import edu.fudan.weixin.model.message.JSONMessageBuilder;
 import edu.fudan.weixin.model.message.NewsJSONMessageBuilder;
-import edu.fudan.weixin.model.message.NewsMessageBuilder;
+
 import edu.fudan.weixin.utils.TACOAuth2Helper;
 
 public class SchoolBusMessageProcessor extends LongTermProcessor {

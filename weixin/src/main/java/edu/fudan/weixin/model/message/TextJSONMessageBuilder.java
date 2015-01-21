@@ -12,6 +12,7 @@ import edu.fudan.eservice.common.utils.CommonUtil;
  */
 public class TextJSONMessageBuilder extends JSONMessageBuilder{
 	
+	@SuppressWarnings("rawtypes")
 	public TextMessageBuilder toXMLMessageBuilder()
 	{
 		TextMessageBuilder text=new TextMessageBuilder();

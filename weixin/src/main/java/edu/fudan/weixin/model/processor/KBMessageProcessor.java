@@ -11,7 +11,6 @@ import org.apache.commons.logging.LogFactory;
 import edu.fudan.eservice.common.utils.CommonUtil;
 import edu.fudan.weixin.model.message.JSONMessageBuilder;
 import edu.fudan.weixin.model.message.NewsJSONMessageBuilder;
-import edu.fudan.weixin.model.message.NewsMessageBuilder;
 
 /**
  * 知识库查询处理

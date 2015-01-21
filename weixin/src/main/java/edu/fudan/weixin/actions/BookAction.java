@@ -54,11 +54,11 @@ public class BookAction extends GuestActionBase {
 				if(!CommonUtil.isEmpty(o))
 				{
 					if(!CommonUtil.eq(o.get("book"), book)){
-					o.put("booktime", System.currentTimeMillis());
+					o.put("booktime", System.currentTimeMillis());}
 					o.put("book", book);	
 					o.put("threshold",threshold);
 					c.save(o);
-					}
+					
 				}
 				result=OperateResult.OK;
 			}
