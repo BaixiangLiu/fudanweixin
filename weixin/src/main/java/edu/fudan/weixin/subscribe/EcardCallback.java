@@ -52,12 +52,12 @@ public class EcardCallback extends PrintCallback {
 	private void sendConsume(EcardConsume consume,String openid){
 		
 		if(consume==null||consume.getTransflag()!=1 &&consume.getTransflag()!=2) return;
-		DBObject data=new BasicDBObject().append("first", "亲爱的"+consume.getCustname()+"("+consume.getStuempno()+")，您的一卡通在"+consume.getShop()+"产生了一笔交易。");
+		DBObject data=new BasicDBObject().append("first", "亲爱的"+consume.getCustname()+"("+consume.getStuempno()+")，您的一卡通在 "+consume.getShop()+" 产生了一笔交易。");
 		data.put("keyword1", consume.getTranstime());		
 		switch(consume.getTransflag())
 		{
-		case 1: data.put("keyword2", "充值");
-		case 2:data.put("keyword2", "消费");
+		case 1: data.put("keyword2", "充值");break;
+		case 2:data.put("keyword2", "消费");break;
 		default: data.put("keyword2","未知");		
 		}
 		data.put("keyword3", consume.getAmount()+"元");

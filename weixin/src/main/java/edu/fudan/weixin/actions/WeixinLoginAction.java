@@ -43,9 +43,10 @@ public class WeixinLoginAction extends GuestActionBase {
 				new Random().nextBytes(bs);
 				String st =EncodeHelper.bytes2hex(bs) ;				
 				// 放进一个使用EhCache维护的容器，当用户从微信的OAuth2.0拿到code后检查这个链接是不是由此链接生成的。
-				CacheManager.getInstance().getCache("WXStates")
-						.put(new Element(st, redir));
-
+				//CacheManager.getInstance().getCache("WXStates")
+				//		.put(new Element(st, redir));
+				getSession().put("wxstate", st);
+				getSession().put("redir", redir);
 				redir = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="
 						+ conf.get("weixin.appid")
 						+ "&redirect_uri="
@@ -70,12 +71,12 @@ public class WeixinLoginAction extends GuestActionBase {
 
 	@Action("wxlogindo")
 	public String logindo() {
-		Cache cache= CacheManager.getInstance().getCache("WXStates");
-		Element el=cache.get(state);
-		if (!CommonUtil.isEmpty(code)
-				&& !CommonUtil.isEmpty(el)) {
-			redir=String.valueOf(el.getObjectValue());
-			cache.removeElement(el);
+		//Cache cache= CacheManager.getInstance().getCache("WXStates");
+		//Element el=cache.get(state);
+		if (!CommonUtil.isEmpty(code)&&!CommonUtil.isEmpty(state)&&state.equals(getSession().remove("wxstate"))) {
+
+			redir=String.valueOf(getSession().remove("redir"));
+			//cache.removeElement(el);
 			Config conf = Config.getInstance();
 			// 获取微信的access_token
 			String urlstr = "https://api.weixin.qq.com/sns/oauth2/access_token?appid="

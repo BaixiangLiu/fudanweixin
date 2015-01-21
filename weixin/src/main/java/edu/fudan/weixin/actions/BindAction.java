@@ -47,11 +47,15 @@ public class BindAction extends GuestActionBase {
 	@Action("bindin")
 	public String input() {
 		Config conf = Config.getInstance();
-		long st = new Random().nextLong();
+		byte[] bs=new byte[16];
+		new Random().nextBytes(bs);
+		String st =EncodeHelper.bytes2hex(bs) ;			
 		// 放进一个使用EhCache维护的容器，当用户从微信的OAuth2.0拿到code后检查这个链接是不是由此链接生成的。
-		CacheManager.getInstance().getCache("WXStates").put(new Element(String.valueOf(st), st));
+		//CacheManager.getInstance().getCache("WXStates").put(new Element(String.valueOf(st), st));
+		//使用Session检查st的合法性
+		getSession().put("wxstate", st);
 		try {
-			org.apache.struts2.ServletActionContext.getResponse().sendRedirect("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + conf.get("weixin.appid") + "&redirect_uri=" + URLEncoder.encode(conf.get("uis.bindurl"), "utf-8") + "&response_type=code&scope=snsapi_base&state=" + st + "#wechat_redirect");
+			org.apache.struts2.ServletActionContext.getResponse().sendRedirect("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + conf.get("weixin.appid") + "&redirect_uri=" + URLEncoder.encode(conf.get("weixin.context")+"uisbind.act", "utf-8") + "&response_type=code&scope=snsapi_base&state=" + st + "#wechat_redirect");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -63,7 +67,7 @@ public class BindAction extends GuestActionBase {
 	@Action("uisbind")
 	public String uis() {
 
-		if (CacheManager.getInstance().getCache("WXStates").get(state) != null) {
+		if (!CommonUtil.isEmpty(code)&&!CommonUtil.isEmpty(state)&&state.equals(getSession().remove("wxstate"))) {
 
 			Config conf = Config.getInstance();
 			// 获取微信的access_token
@@ -73,8 +77,11 @@ public class BindAction extends GuestActionBase {
 				DBObject retobj = (DBObject) JSON.parse(ret);
 				Object acctk = retobj.get("access_token");
 				if (!CommonUtil.isEmpty(acctk)) {
+					Object openid = retobj.get("openid");
+					// 设置Session
+					getSession().put("openid", openid);
 					DBCollection c = MongoUtil.getInstance().getDB().getCollection("Bindings");
-					DBObject obj = c.findOne(new BasicDBObject("openid", retobj.get("openid")));
+					DBObject obj = c.findOne(new BasicDBObject("openid", openid));
 					if (CommonUtil.isEmpty(obj)) {
 						obj = new BasicDBObject().append("openid", retobj.get("openid"));
 					}
@@ -118,6 +125,7 @@ public class BindAction extends GuestActionBase {
 			if (!CommonUtil.isEmpty(acctk)) {
 				DBCollection c = MongoUtil.getInstance().getDB().getCollection("Bindings");
 				String openid = new String(EncodeHelper.dencrypt("AES", EncodeHelper.hex2bytes(state), EncodeHelper.hex2bytes(conf.get("tac.enckey")), null));
+				if(!CommonUtil.isEmpty(openid)&&openid.equals(getSession().get("openid"))){
 				DBObject idobj = c.findOne(new BasicDBObject("openid", openid));
 				if (!CommonUtil.isEmpty(idobj)) {
 					BasicDBObject obj = new BasicDBObject();
@@ -179,7 +187,10 @@ public class BindAction extends GuestActionBase {
 						addActionError("Error in TAC Resource:" + retobj.get("error"));
 					}
 					c.save(idobj);
-
+				}
+				}else
+				{
+					addActionError("该绑定请求的来源中的微信账号信息与当前账号不匹配，可能存在安全风险，请通过“复旦信息办”微信公众账号获取最新的绑定链接！");
 				}
 			} else {
 				addActionError("Error in TAC OAuth2 : " + retobj.get("error"));

@@ -19,7 +19,7 @@ public class GuestActionBase extends ActionSupport implements ApplicationAware,S
 	
 	private String token=null;
 
-	protected Map<String, Object> session=new HashMap<String, Object>();
+	protected Map<String, Object> session;
 
 	public Map<String, Object> getSession() {
 		return this.session;

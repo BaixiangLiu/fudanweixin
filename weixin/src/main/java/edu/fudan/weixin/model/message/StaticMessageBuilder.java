@@ -36,14 +36,11 @@ public class StaticMessageBuilder {
 		long st=new Random().nextLong(); 
 		//放进一个使用EhCache维护的容器，当用户从微信的OAuth2.0拿到code后检查这个链接是不是由此链接生成的。
 		CacheManager.getInstance().getCache("WXStates").put(new Element(String.valueOf(st),st));
-		try {
+		
 			builder.addArticle("UIS账号绑定", "通过OAuth2.0接口将您的微信账号与复旦大学UIS账号进行绑定，以获取个性化信息服务。\n请点击查看全文并在打开的页面中输入学/工号和UIS口令，并完成授权操作。",
-					"https://open.weixin.qq.com/connect/oauth2/authorize?appid="+conf.get("weixin.appid")+"&redirect_uri="+URLEncoder.encode(conf.get("uis.bindurl"),"utf-8")+"&response_type=code&scope=snsapi_base&state="+st+"#wechat_redirect",
+					conf.get("weixin.context")+"bindin.act",
 					conf.get("weixin.context")+"images/uis.gif");
-		} catch (UnsupportedEncodingException e) {
-			
-			e.printStackTrace();
-		}
+	
 		builder.setContent(null);
 		return builder.getMessage();
 	}
