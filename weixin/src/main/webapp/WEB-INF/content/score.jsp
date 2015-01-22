@@ -18,11 +18,15 @@
 <script type="text/javascript">
 	$(function() {
 		var ys = $("#termy")[0];
-		var ty = 2014;
+		var now=new Date();
+		var ty = now.getFullYear();
+		if(now.getMonth()<8)
+			ty--;
+		ys.options.add(new Option("所有学期","all"));
 		for (var i = 0; i < 10; i++)
 			ys.options
 					.add(new Option(((ty - i) + "-" + (ty + 1 - i)), (ty - i)));
-
+		ys.options[1].selected=true;
 		$.getJSON("resource/schoolterm.act", {}, function(resp) {
 			if (resp.result.errcode == 0) {
 				$("#pcontent").html(
@@ -43,12 +47,13 @@
 		return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
 	}
 	function subform() {
+		var term=$("#termy").val()=="all"?"all": ($("#termy").val()+ "" + $("#termt").val());
 		$
 				.getJSON(
 						"resource/score.act",
 						{
 							"uisid" : $("#uisid").val(),
-							"term" : $("#termy").val() + "" + $("#termt").val()
+							"term" : term
 						},
 						function(resp) {
 							var htm = "";
@@ -116,7 +121,8 @@
 							</div>
 							<div class="form-group">
 								<div class="input-group">
-									<select class="selectpicker" id="termy"></select> <span
+									<select class="selectpicker" id="termy">									
+									</select> <span
 										class="input-group-addon" >学年</span> <select
 										class="selectpicker" id="termt"><option
 											value="01">秋季</option>

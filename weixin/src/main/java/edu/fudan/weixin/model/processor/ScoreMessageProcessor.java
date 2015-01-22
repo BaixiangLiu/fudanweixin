@@ -37,7 +37,7 @@ public class ScoreMessageProcessor extends LongTermProcessor {
 		content = String.valueOf(message.get("Content"));
 
 		if (!CommonUtil.isEmpty(content)
-				&& p.matcher(content.trim()).matches()
+				&& (p.matcher(content.trim()).matches()||content.equals("所有成绩"))
 				|| "event".equalsIgnoreCase(msgtype)
 				&& "CLICK"
 						.equalsIgnoreCase(String.valueOf(message.get("Event")))
@@ -63,6 +63,9 @@ public class ScoreMessageProcessor extends LongTermProcessor {
 				if (!CommonUtil.isEmpty(byear) && !CommonUtil.isEmpty(tm))
 					term = "20" + byear + "20" + (Integer.parseInt(byear) + 1)
 							+ "0" + tm;
+			}else if (content.equals("所有成绩"))
+			{
+				term="all";
 			}
 		}
 
