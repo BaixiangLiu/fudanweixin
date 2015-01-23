@@ -9,6 +9,8 @@
 package edu.fudan.dkf.actions;
 
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Namespace;
+import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
 import edu.fudan.eservice.common.struts.GuestActionBase;
@@ -22,11 +24,14 @@ import edu.fudan.webclient.service.MongoService;
  * @date: Oct 19, 2014 3:18:53 PM
  */
 @SuppressWarnings("serial")
+@ParentPackage(value = "servicebase")
+@Namespace("/")
+
 public class DkfUserInfoAction extends GuestActionBase {
 	private String openid;
 	private IMongoEntity entity;
 	
-	@Action(value = "dkfuserinfo", results = {@Result(name = SUCCESS, location = "dkfuserinfo.jsp")})
+	@Action(value = "dkfuser", results = {@Result(type="json",params={"root","entity"})})
 	public String info() throws Exception {
 		if (openid!= null) {
 			BindingEntity	 en = new BindingEntity();
