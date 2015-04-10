@@ -89,8 +89,8 @@ public class SudyPageAction extends CrawlerBase {
 				e.printStackTrace();
 			}
 		}
-
-		return SUCCESS;
+		jsonp(list);
+		return NONE;
 	}
 
 	@Action(value = "sdcontent", results = { @Result(type = "json", params = {
@@ -212,7 +212,8 @@ public class SudyPageAction extends CrawlerBase {
 			if (!CommonUtil.isEmpty(en) && !CommonUtil.isEmpty(en.getContent()))
 				c.put(new Element(ckey, en));
 		}
-		return SUCCESS;
+		jsonp(en);
+		return NONE;
 	}
 
 	public String getDomain() {
