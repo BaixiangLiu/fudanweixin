@@ -31,6 +31,8 @@
 			return "liblist.act";
 		if(ptype=="dst")
 			return "dstlist.act";
+		if(ptype=="xxb")
+			return "sdlist.act?domain="+encodeURIComponent("http://www.xxb.fudan.edu.cn")+"&listid=2240";
 		if(ptype=="jwc")
 			return "sdlist.act?domain="+encodeURIComponent("http://www.jwc.fudan.edu.cn")+"&listid=3167";
 		if(ptype=="gs")
@@ -64,7 +66,7 @@
 			return "libcontent.act";
 		if(ptype=="dst")
 			return "dstcontent.act";
-		if(ptype=="jwc"||ptype=="gs"||ptype=="cwc"||ptype=="hr"||ptype=="fao"||ptype=="zcglc"||ptype=="xyfw")
+		if(ptype=="xxb"||ptype=="jwc"||ptype=="gs"||ptype=="cwc"||ptype=="hr"||ptype=="fao"||ptype=="zcglc"||ptype=="xyfw")
 			return "sdcontent.act?domain="+encodeURIComponent("http://www."+ptype+".fudan.edu.cn");
 		if(ptype=="baoweichu"||ptype=="wkkyc"||ptype=="yxky")
 			return "sdcontent.act?domain="+encodeURIComponent("http://"+ptype+".fudan.edu.cn");

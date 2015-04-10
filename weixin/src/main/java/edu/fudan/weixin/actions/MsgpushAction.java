@@ -49,7 +49,7 @@ public class MsgpushAction extends GuestActionBase {
 	public String msgpush() throws Exception
 	{
 		BufferedReader r=ServletActionContext.getRequest().getReader();
-		StringBuffer ret = null;
+		String ret = null;
 		StringBuffer sb=new StringBuffer();
 		String s;
 		while((s=r.readLine())!=null)
@@ -85,6 +85,7 @@ public class MsgpushAction extends GuestActionBase {
 								 retobj.put("timestamp", timestamp);
 								 retobj.put("clientid", clientid);
 								 db.getCollection("Pushmsgs").save(retobj);
+								 ret=cret;
 								}else
 									errormsg=cret; 
 							}else
@@ -117,7 +118,7 @@ public class MsgpushAction extends GuestActionBase {
 		resp.setCharacterEncoding("utf-8");
 		resp.setContentType("application/json");
 		if(!CommonUtil.isEmpty(ret))
-			resp.getWriter().print(ret.toString());
+			resp.getWriter().print(ret);
 		else
 			resp.getWriter().write("{\"errcode\":50000,\"errmsg\":\""+errormsg+"\"}");
 		

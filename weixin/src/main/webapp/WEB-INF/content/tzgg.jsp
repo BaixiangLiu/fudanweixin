@@ -23,6 +23,7 @@
                                         <s:actionerror />
 <ul class="list-group">
 <li class="list-group-item" onclick="location='catz.act?type=ca'" >校主页通知公告</li>
+<li class="list-group-item" onclick="location='catz.act?type=xxb'" >信息办服务公告</li>
 <li class="list-group-item" onclick="location='catz.act?type=jwc'" >教务处（本科生院）通知公告</li>
 <li class="list-group-item" onclick="location='catz.act?type=gs'" >研究生院通知公告</li>
 <li class="list-group-item" onclick="location='catz.act?type=cwc'" >财务处公告栏</li>
