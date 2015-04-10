@@ -6,6 +6,10 @@ public class EcardConsume {
 	 */
 	String refno;
 	/**
+	 * 交易日期
+	 */
+	String transdate;
+	/**
 	 * 交易时间
 	 */
 	String transtime;
@@ -69,6 +73,20 @@ public class EcardConsume {
 	 * 交易额
 	 */
 	float amount;
+	
+	public String getNiceTranstime()
+	{
+		if(transdate!=null &&transtime!=null&&transdate.length()==8&&transtime.length()==6)
+		{
+			StringBuffer ret=new StringBuffer();
+			ret.append(transdate.subSequence(0, 4)).append("-").append(transdate.subSequence(4, 6))
+			.append("-").append(transdate.subSequence(6, 8)).append(" ").append(transtime.subSequence(0, 2))
+			.append(":").append(transtime.subSequence(2, 4)).append(":").append(transtime.subSequence(4, 6));
+			return ret.toString();
+		}else{
+		return "";
+		}
+	}
 	public String getRefno() {
 		return refno;
 	}
@@ -165,17 +183,25 @@ public class EcardConsume {
 	public void setAmount(float amount) {
 		this.amount = amount;
 	}
+	
+	public String getTransdate() {
+		return transdate;
+	}
+	public void setTransdate(String transdate) {
+		this.transdate = transdate;
+	}
 	@Override
 	public String toString() {
-		return "EcardConsume [refno=" + refno + ", transtime=" + transtime
-				+ ", termid=" + termid + ", shop=" + shop + ", transcode="
-				+ transcode + ", stuempno=" + stuempno + ", custname="
-				+ custname + ", transflag=" + transflag + ", paytype="
-				+ paytype + ", voucherno=" + voucherno + ", status=" + status
-				+ ", errcode=" + errcode + ", remark=" + remark
-				+ ", cardbefbal=" + cardbefbal + ", cardaftbal=" + cardaftbal
-				+ ", amount=" + amount + "]";
+		return "EcardConsume [refno=" + refno + ", transdate=" + transdate
+				+ ", transtime=" + transtime + ", termid=" + termid + ", shop="
+				+ shop + ", transcode=" + transcode + ", stuempno=" + stuempno
+				+ ", custname=" + custname + ", transflag=" + transflag
+				+ ", paytype=" + paytype + ", voucherno=" + voucherno
+				+ ", status=" + status + ", errcode=" + errcode + ", remark="
+				+ remark + ", cardbefbal=" + cardbefbal + ", cardaftbal="
+				+ cardaftbal + ", amount=" + amount + "]";
 	}
+
 	
 	
 }
