@@ -5,12 +5,15 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.security.GeneralSecurityException;
+import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.security.spec.AlgorithmParameterSpec;
 import java.util.Random;
 
 import javax.crypto.Cipher;
+import javax.crypto.Mac;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
@@ -227,5 +230,40 @@ public class EncodeHelper {
 		return "";
 	}
 
+	/**
+	 * 生成签名
+	 * @param hash
+	 * @param data
+	 * @param key
+	 * @return
+	 */
+	public static String hmac(String hash,String data, String key) {
+		byte[] byteHMAC = null;
+		try {
+			Mac mac = Mac.getInstance("Hmac"+hash);
+			SecretKeySpec spec = new SecretKeySpec(key.getBytes(), "Hmac"+hash);
+			mac.init(spec);
+			byteHMAC = mac.doFinal(data.getBytes("UTF-8"));
+		} catch (InvalidKeyException e) {
+			e.printStackTrace();
+		} catch (NoSuchAlgorithmException ignore) {
+			ignore.printStackTrace();
+		} catch (IllegalStateException e) {
+	    e.printStackTrace();
+    } catch (UnsupportedEncodingException e) {
+	    e.printStackTrace();
+    }
 
+		if (byteHMAC != null) {
+			try {
+				String hexMac = bytes2hex(byteHMAC);
+				return hexMac;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+		return null;
+	}
+	
 }

@@ -21,7 +21,7 @@ public class TestEncode {
 		@Test
 		public void testEncode() {
 			//System.out.println(encode("example:123456", "BASE64"));
-			System.out.println(digest(randpass(20),"SHA"));
+			System.out.println(digest(randpass(20),"SHA1"));
 		}
 
 }
