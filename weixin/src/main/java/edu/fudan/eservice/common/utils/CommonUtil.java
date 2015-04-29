@@ -34,7 +34,7 @@ public class CommonUtil {
 	{
 		String context=ServletActionContext.getServletContext().getContextPath();		
 		String uisUrl=context+(context.endsWith("/")?"":"/")+"login.act";		
-		uisUrl+="?goto="+ServletActionContext.getRequest().getRequestURL();
+		uisUrl+="?redir="+ServletActionContext.getRequest().getRequestURL();
 		return uisUrl;
 	}
 	

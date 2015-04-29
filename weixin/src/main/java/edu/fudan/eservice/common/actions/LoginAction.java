@@ -12,7 +12,7 @@ import edu.fudan.eservice.common.struts.GuestActionBase;
 import edu.fudan.eservice.common.utils.CommonUtil;
 
 @ParentPackage(value = "servicebase")
-@Results({ @Result(name = "success", type = "httpheader"), @Result(name = "input", location = "login.jsp") })
+@Results({ @Result(name = "success", type = "httpheader") })
 @InterceptorRef(value = "guest")
 public class LoginAction extends GuestActionBase {
 
@@ -26,23 +26,20 @@ public class LoginAction extends GuestActionBase {
 	private String redir;
 
 	public String execute() throws IOException {
-		if (CommonUtil.isEmpty(enmsg))
-			return INPUT;
-		String uid = checkMsg(enmsg, true);
-		if (!CommonUtil.isEmpty(uid)) {
-			if (CommonUtil.isEmpty(redir) || redir.indexOf("login.") >= 0)
-				redir = ServletActionContext.getServletContext().getContextPath();
-			ServletActionContext.getResponse().sendRedirect(redir);
-		} else {
-			return INPUT;
+		if (CommonUtil.isEmpty(getSession().get("openid"))) {
+			String openid = null;
+
+			if (!CommonUtil.isEmpty(openid)) {
+				if (CommonUtil.isEmpty(redir) || redir.indexOf("login.") >= 0)
+					redir = ServletActionContext.getServletContext()
+							.getContextPath();
+				ServletActionContext.getResponse().sendRedirect(redir);
+			}
 		}
 		return NONE;
 	}
 
-	private String checkMsg(String enmsg2, boolean b) {
 
-		return null;
-	}
 
 	public String getEnmsg() {
 		return enmsg;

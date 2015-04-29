@@ -33,6 +33,9 @@
 					<a href="booklist.act"><img src="images/book.png" /><br />订阅中心</a>
 					</div>
 					<div class="col-xs-6 col-sm-4 col-md-3 text-center">
+					<a href="http://baishitong.fudan.edu.cn/wiki/%E5%A4%8D%E6%97%A6%E4%BF%A1%E6%81%AF%E5%8A%9E%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7"><img src="images/help.png" /><br />使用帮助</a>
+					</div>
+					<div class="col-xs-6 col-sm-4 col-md-3 text-center">
 					<a href="binds.act"><img src="images/bind.png" /><br />绑定账号查看</a>
 					</div>
 					<div class="col-xs-6 col-sm-4 col-md-3 text-center">
@@ -45,7 +48,11 @@
 					<a href="score.act"><img src="images/score.png" /><br />成绩</a>
 					</div>
 					<div class="col-xs-6 col-sm-4 col-md-3 text-center">
-					<a href="phoneyp.act"><img src="images/yp.png" /><br />电话黄页</a>
+					<a href="phoneyp.act"><img src="images/yp.png" /><br />电话黄页</a>					
+					</div>
+					
+					<div class="col-xs-6 col-sm-4 col-md-3 text-center">
+					<a href="classroom.act"><img src="images/free.png" /><br />空闲教室</a>
 					</div>
 					<div class="col-xs-6 col-sm-4 col-md-3 text-center">
 					<a href="tzgg.act"><img src="images/tz.png" /><br />通知公告</a>
@@ -56,7 +63,7 @@
 					<div class="col-xs-6 col-sm-4 col-md-3 text-center">
 					<a href="event.act"><img src="images/event.png" /><br />校园文化日历</a>
 					</div>
-					</div>
+					
 
 				</div>
 
