@@ -18,4 +18,6 @@ Servers/
 .recommenders/
 *.project
 weixin/src/main/resources/dbconnect.properties
-weixin/src/main/resources/dbconnect.properties
+weixin/.classpath
+ecardproducer/
+umc/
