@@ -76,7 +76,8 @@ public class MsgpushAction extends GuestActionBase {
 						DBObject user=db.getCollection("Bindings").findOne(new BasicDBObject("binds",new BasicDBObject("$elemMatch",new BasicDBObject("uisid",touser))));
 						if(!CommonUtil.isEmpty(user)&&!CommonUtil.isEmpty(user.get("openid")))
 						{
-							if(db.getCollection("Books").findOne(new BasicDBObject("openid",user.get("openid")).append("item", head.get("template")).append("book"	, true))!=null)
+							//template白名单
+							if(Config.getInstance().get("push.whitelist").indexOf(head.get("template").toString())>=0 || db.getCollection("Books").findOne(new BasicDBObject("openid",user.get("openid")).append("item", head.get("template")).append("book"	, true))!=null)
 							{
 								String cret=TemplateMessage.send(String.valueOf(head.get("template")), String.valueOf(user.get("openid")), (DBObject)req.get("data"));
 								if(cret!=null && cret.startsWith("{")){

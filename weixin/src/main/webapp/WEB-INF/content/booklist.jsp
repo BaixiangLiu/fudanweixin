@@ -45,7 +45,7 @@ function setbook(item,obj,threshold)
 	<div class="container-fluid">
 		<s:include value="/common/wxnav.jsp" />
 
-		<div class="alert alert-warning">本功能正在建设中，部分订阅消息无法收到</div>
+		
 		
 
 		<div class=" col-sm-6 col-md-4 ">
@@ -75,34 +75,9 @@ function setbook(item,obj,threshold)
 			</div>
 		</div>
 
-<div class=" col-sm-6 col-md-4">
-			<div class=" panel panel-primary">
-				<div class="panel-heading">故障告警</div>
-				<div class="panel-body">
-					<label> <input type="checkbox"
-						onclick="setbook('fail_warning',this)"
-						<s:if test="'fail_warning in items.keySet()">checked="checked"</s:if> />故障告警
-					</label><br /> <label> <input type="checkbox"
-						onclick="setbook('fail_recovery',this)"
-						<s:if test="'fail_recovery in items.keySet()">checked="checked"</s:if> />故障恢复
-					</label>
-				</div>
-			</div>
-		</div>
-		
-		<div class=" col-sm-6 col-md-4 ">
-			<div class=" panel panel-primary">
-				<div class="panel-heading">办公系统</div>
-				<div class="panel-body">
-					<label><input type="checkbox"
-						onclick="setbook('oa_todo',this)" disabled="disabled"
-						<s:if test="'oa_todo' in items.keySet()">checked="checked"</s:if> />待办事宜
-					</label><br />
-				</div>
-			</div>
-		</div>
-	</div>
 
+</div>
+<div class="alert alert-warning">本功能正在建设中，部分订阅消息可能无法收到</div>
 
 
 	<s:include value="/common/foot.jsp" />
