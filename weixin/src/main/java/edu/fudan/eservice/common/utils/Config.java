@@ -1,5 +1,6 @@
 package edu.fudan.eservice.common.utils;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -23,7 +24,7 @@ public class Config {
 	Config()
 	{
 		
-			props=new HashMap<String,Object>();
+			props=Collections.synchronizedMap(new HashMap<String,Object>());
 			reload();
 			ThreadPoolHelper.getInstance().getSchPool().scheduleAtFixedRate(new DBConfigLoader(), 20, 20, TimeUnit.SECONDS);
 		
