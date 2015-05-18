@@ -97,4 +97,14 @@ public class LogInterceptor implements Interceptor {
 		this.outing = outing;
 	}
 
+	public String getExcludes() {
+		return excludes;
+	}
+
+	public void setExcludes(String excludes) {
+		this.excludes = excludes;
+	}
+	
+	
+
 }

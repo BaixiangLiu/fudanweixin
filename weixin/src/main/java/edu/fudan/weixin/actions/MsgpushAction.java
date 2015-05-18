@@ -168,7 +168,7 @@ public class MsgpushAction extends GuestActionBase {
 	private boolean checkTime(long stamp)
 	{
 		long diff=System.currentTimeMillis()-stamp;
-		if(diff>60000||diff<-60000)
+		if(diff>900000||diff<-900000)
 			return false;
 		else
 			return true;
