@@ -3,7 +3,6 @@ package edu.fudan.weixin.kafka;
 import java.util.Map;
 import java.util.Set;
 
-import edu.fudan.eservice.common.utils.ThreadPoolHelper;
 import kafka.consumer.ConsumerIterator;
 import kafka.consumer.KafkaStream;
 import kafka.message.MessageAndMetadata;
@@ -23,7 +22,12 @@ public class CallbackThread implements Runnable {
 			if (cbs != null) {
 				
 								for (ConsumeCallback cb : cbs)
+									try{
 									cb.process(mm);
+									}catch(Exception ex)
+								{
+										ex.printStackTrace();
+								}
 						
 			}
 		}
