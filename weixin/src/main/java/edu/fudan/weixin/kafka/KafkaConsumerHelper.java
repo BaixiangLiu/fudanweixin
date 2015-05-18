@@ -57,10 +57,11 @@ public class KafkaConsumerHelper {
 	}
 
 	public  synchronized void start() {
+		Config conf= Config.getInstance();
 		Properties props = new Properties();
-		props.put("zookeeper.connect", Config.getInstance()
+		props.put("zookeeper.connect",conf
 				.get("kafka.servers"));
-		props.put("group.id", "weixin");
+		props.put("group.id", conf.get("kafka.groupid"));
 		props.put("zookeeper.session.timeout.ms", "400");
 		props.put("zookeeper.sync.time.ms", "200");
 		props.put("auto.commit.interval.ms", "1000");
@@ -76,7 +77,7 @@ public class KafkaConsumerHelper {
 			List<KafkaStream<String, String>> streams = consumer
 					.createMessageStreamsByFilter(
 							new Whitelist(topics),
-							Integer.parseInt(Config.getInstance().get(
+							Integer.parseInt(conf.get(
 									"kafka.threads")), sd, sd);
 			if (streams != null) {
 				ExecutorService tph = ThreadPoolHelper.getInstance()

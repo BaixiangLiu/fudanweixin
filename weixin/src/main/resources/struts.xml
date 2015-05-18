@@ -38,7 +38,9 @@
 			<interceptor-stack name="guest">
 				<!-- <interceptor-ref name="log" /> -->
 				<interceptor-ref name="defaultStack" />
-				<interceptor-ref name="log" />
+				<interceptor-ref name="log" >
+					<param name="excludes">crawler/,index</param>
+				</interceptor-ref>
 			</interceptor-stack>
 			<interceptor-stack name="user">
 				<interceptor-ref name="defaultStack" />

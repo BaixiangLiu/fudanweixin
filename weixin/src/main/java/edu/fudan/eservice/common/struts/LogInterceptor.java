@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.alibaba.fastjson.JSON;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.Interceptor;
@@ -21,6 +22,7 @@ public class LogInterceptor implements Interceptor {
 	private static Log log = LogFactory.getLog(LogInterceptor.class);
 
 	private int outing = 3;
+	private String excludes=null;
 
 	public void destroy() {
 	}
@@ -29,7 +31,22 @@ public class LogInterceptor implements Interceptor {
 	}
 	@SuppressWarnings("rawtypes")
 	public String intercept(ActionInvocation actionInvocation) throws Exception {
+		
 		ActionContext ac = actionInvocation.getInvocationContext();
+		String reqstr=actionInvocation.getProxy().getNamespace()+"/"+actionInvocation.getProxy().getActionName();
+		//log.info(reqstr);
+		if(!CommonUtil.isEmpty(excludes)) 
+		{
+			String[] excs=excludes.split(",");
+			for(String exs:excs)
+			{
+				if(!CommonUtil.isEmpty(exs)&&reqstr.indexOf(exs)>=0)
+					return actionInvocation.invoke();
+			}
+			
+		}
+		
+		
 		
 		Map e = ac.getParameters();
 
