@@ -59,14 +59,16 @@ public class ElectricMessageProcessor extends LongTermProcessor {
 		int i = 0;
 		for (Object usrs : ls) {
 			if (usrs != null && usrs instanceof DBObject) {
+				if (i > 0)
+					info.append("\n\n");
+				info.append("学/工号: " +((DBObject) usrs).get("uisid") );
 				Object elecs = ((DBObject) usrs).get("list");
 				if (elecs != null && elecs instanceof List) {
 					for (Object elec : (List) elecs) {
 						if (elec != null && elec instanceof DBObject) {
 							DBObject ele = (DBObject) elec;
-							if (i > 0)
-								info.append("\n\n");
-							info.append("学/工号: " + ele.get("username"));
+							
+							
 
 							info.append("\n房间: " + ele.get("school_space")
 									+ ele.get("room"));
@@ -79,9 +81,9 @@ public class ElectricMessageProcessor extends LongTermProcessor {
 						}
 					}
 				} else {
-					if ("access_denied".equals(((DBObject) usrs).get("error")))
+					if ("access_denied".equals(((DBObject)((DBObject) usrs).get("list")).get("error")))
 						info.append("\n尚未完成绑定操作，请重新对此UIS账号进行绑定。");
-					if ("invalid_scope".equals(((DBObject) usrs).get("error")))
+					if ("invalid_scope".equals(((DBObject)((DBObject) usrs).get("list")).get("error")))
 						info.append("\n未对此UIS账号的电费信息项目授权，请发送语音或文字消息【修改授权】并按提示进行操作");
 
 				}

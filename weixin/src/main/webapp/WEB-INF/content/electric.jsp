@@ -24,10 +24,10 @@ $(
 				{
 					var data=resp.list[i];
 					
-					htm+="<div class=' panel panel-primary'><div class='panel-heading'>"+data.list[0].person_name+" ("+data.list[0].username+")</div><div class='panel-body'>";
-					if(data.error=="access_denied") 
+					htm+="<div class=' panel panel-primary'><div class='panel-heading'>"+data.username+" ("+data.uisid+")</div><div class='panel-body'>";
+					if(data.list.error=="access_denied") 
 						htm+="<div class='alert alert-warning'>尚未完成绑定操作，请重新对此UIS账号进行绑定。</div>";
-					if(data.error=="invalid_scope")
+					if(data.list.error=="invalid_scope")
 						htm+="<div class='alert alert-warning'>未对此UIS账号的电费信息项目授权，请发送语音或文字消息【修改授权】并按提示进行操作</div>";
 					if(data.error==null)
 					{

@@ -1,11 +1,13 @@
 package edu.fudan.weixin;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Test;
 
 import edu.fudan.eservice.common.utils.CommonUtil;
+import edu.fudan.weixin.model.processor.ElectricMessageProcessor;
 import edu.fudan.weixin.utils.WeixinMessageHelper;
 
 public class TestMessage {
@@ -29,25 +31,34 @@ public class TestMessage {
 	}
 	
 	@Test
+	public void testElectric() throws Exception
+	{
+		Map<String,Object> msg=buildTxtMsg("电费");
+		System.out.println(new ElectricMessageProcessor().process(msg));
+		
+	//	System.out.println(CommonUtil.postWebRequest(urlstr, WeixinMessageHelper.xml2str(WeixinMessageHelper.dbo2xml(msg)).getBytes("utf-8"), "application/xml; charset=utf-8"));
+
+	}
+	
 	public void testPhoneyp() throws Exception
 	{
 		Map<String,Object> msg=buildTxtMsg("dh信息办");
 		System.out.println(CommonUtil.postWebRequest(urlstr, WeixinMessageHelper.xml2str(WeixinMessageHelper.dbo2xml(msg)).getBytes("utf-8"), "application/xml; charset=utf-8"));
 	}
 	
-	@Test
+	
 	public void testKB() throws Exception
 	{
 		Map<String,Object> msg=buildTxtMsg("kb信息办");
 		System.out.println(CommonUtil.postWebRequest(urlstr, WeixinMessageHelper.xml2str(WeixinMessageHelper.dbo2xml(msg)).getBytes("utf-8"), "application/xml; charset=utf-8"));
 	}
-	@Test
+	
 	public void testBalance() throws Exception
 	{
 		Map<String,Object> msg=buildTxtMsg("ykt");
 		System.out.println(CommonUtil.postWebRequest(urlstr, WeixinMessageHelper.xml2str(WeixinMessageHelper.dbo2xml(msg)).getBytes("utf-8"), "application/xml; charset=utf-8"));
 	}
-	@Test
+	
 	public void testConsume() throws Exception
 	{
 		Map<String,Object> msg=buildTxtMsg("yktxf");
@@ -56,14 +67,14 @@ public class TestMessage {
 			System.out.println(CommonUtil.postWebRequest(urlstr, WeixinMessageHelper.xml2str(WeixinMessageHelper.dbo2xml(msg)).getBytes("utf-8"), "application/xml; charset=utf-8"));
 	}
 
-	@Test
+	
 	public void testScore() throws Exception
 	{
 		Map<String,Object> msg=buildTxtMsg("cj");
 		System.out.println(CommonUtil.postWebRequest(urlstr, WeixinMessageHelper.xml2str(WeixinMessageHelper.dbo2xml(msg)).getBytes("utf-8"), "application/xml; charset=utf-8"));
 	}
 	
-	@Test
+	
 	public void testLesson() throws Exception {
 		Map<String,Object> msg = buildTxtMsg("课程091");
 		System.out.println(CommonUtil.postWebRequest(urlstr, WeixinMessageHelper.xml2str(WeixinMessageHelper.dbo2xml(msg)).getBytes("utf-8"), "application/xml; charset=utf-8"));
