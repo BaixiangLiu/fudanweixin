@@ -16,6 +16,7 @@ import com.mongodb.DBObject;
 import edu.fudan.eservice.common.struts.GuestActionBase;
 import edu.fudan.eservice.common.utils.CommonUtil;
 import edu.fudan.eservice.common.utils.MongoUtil;
+import edu.fudan.weixin.model.message.StaticMessageBuilder;
 import edu.fudan.weixin.utils.OperateResult;
 
 @ParentPackage("servicebase")
@@ -30,6 +31,7 @@ public class BookAction extends GuestActionBase {
 	private String item;
 	private boolean book;
 	private float threshold;
+	private String authurl;
 	private OperateResult result;
 	@Action("book")
 	public String execute()
@@ -71,13 +73,13 @@ public class BookAction extends GuestActionBase {
 		Object openid=getSession().get("openid");
 		DBCursor cs=MongoUtil.getInstance().getDB().getCollection("Books").find(new BasicDBObject("openid",openid).append("book",true));
 		items=new HashMap<String,Object>();
-		int i=0;
+		
 		while(cs.hasNext())
 		{
 			DBObject obj=cs.next();
 			items.put(obj.get("item").toString(), obj.get("threshold"));
 		}
-		
+		authurl=StaticMessageBuilder.buildScopeUrl();
 		return SUCCESS;
 	}
 	
@@ -110,6 +112,12 @@ public class BookAction extends GuestActionBase {
 	}
 	public void setThreshold(float threshold) {
 		this.threshold = threshold;
+	}
+	public String getAuthurl() {
+		return authurl;
+	}
+	public void setAuthurl(String authurl) {
+		this.authurl = authurl;
 	}
 	
 }

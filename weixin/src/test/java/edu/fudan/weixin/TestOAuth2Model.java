@@ -14,7 +14,7 @@ public class TestOAuth2Model {
 	
 	private DBObject getBD()
 	{
-		return MongoUtil.getInstance().getDB().getCollection("Bindings").findOne(new BasicDBObject("binds",new BasicDBObject("$elemMatch",new BasicDBObject("uisid","09110240017"))));
+		return MongoUtil.getInstance().getDB().getCollection("Bindings").findOne(new BasicDBObject("binds",new BasicDBObject("$elemMatch",new BasicDBObject("uisid","04538"))));
 	}
 	
 	//@Test
@@ -53,6 +53,14 @@ public class TestOAuth2Model {
 		System.out.println(om.yktxf(bd, "", ""));
 	}
 	
+	
+	@Test
+	public void testelectric()
+	{
+		DBObject bd=getBD();
+		TACOAuth2Model om=new TACOAuth2Model();
+		System.out.println(om.electric(bd));
+	}
 	
 	
 }

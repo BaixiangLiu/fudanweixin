@@ -63,7 +63,9 @@
 					<div class="col-xs-6 col-sm-4 col-md-3 text-center">
 					<a href="event.act"><img src="images/event.png" /><br />校园文化日历</a>
 					</div>
-					
+					<div class="col-xs-6 col-sm-4 col-md-3 text-center">
+					<a href="electric.act"><img src="images/elec.png" /><br />电费信息</a>
+					</div>
 
 				</div>
 

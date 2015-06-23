@@ -72,9 +72,30 @@ function setbook(item,obj,threshold)
 						value="<s:property value="items.get('ecard_consume')==null?'20':items.get('ecard_consume')" />"
 						onchange="setbook('ecard_consume',$('#consume_check')[0],this.value)" /><label>元时</label>
 				</div>
+				<div class="alert alert-warning">使用本功能需要授权微信号对您的一卡通信息的访问。<a href="<s:property value="authurl" />">修改授权</a></div>
 			</div>
 		</div>
 
+			<div class=" col-sm-6 col-md-4 ">
+			<div class=" panel panel-primary">
+				<div class="panel-heading">寝室电费</div>
+				<div class="panel-body">
+					<label><input type="checkbox"
+						onclick="setbook('electric_balance',this)"
+						<s:if test="'electric_balance' in items.keySet()">checked="checked"</s:if> />每日电量余额提醒
+					</label><br /> <label><input type="checkbox"
+						onclick="setbook('electric_low',this,$('#electric_threshold').val())"
+						<s:if test="'electric_low' in items.keySet()">checked="checked"</s:if>
+						id="electric_check" />低电量余额提醒：剩余电量低于</label> <input type="text"
+						class="input-sm form-control" style="width: 65px; display: inline"
+						id="electric_threshold"
+						value="<s:property value="items.get('electric_low')==null?'10':items.get('electric_low')" />"
+						onchange="setbook('electric_low',$('#electric_check')[0],this.value)" /><label>度时</label>
+						</div>
+						<div class="alert alert-warning">使用本功能需要授权微信号对您的电费信息的访问。<a href="<s:property value="authurl" />">修改授权</a></div>
+			</div>
+			
+			</div>			
 
 </div>
 <div class="alert alert-warning">本功能正在建设中，部分订阅消息可能无法收到</div>

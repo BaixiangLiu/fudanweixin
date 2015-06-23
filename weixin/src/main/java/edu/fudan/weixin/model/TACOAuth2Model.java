@@ -142,6 +142,23 @@ public class TACOAuth2Model {
 		}
 		return new BasicDBList();
 	}
+	
+	/**
+	 * 获取电费信息
+	 * @param binding
+	* @return
+	 */
+	public BasicDBList electric(DBObject binding) {
+		try {
+			return fetchResource(binding,
+					TACOAuth2Helper.class.getDeclaredMethod("electric",
+							String.class));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new BasicDBList();
+	}
+	
 
 	/**
 	 * 成绩

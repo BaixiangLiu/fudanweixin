@@ -64,6 +64,9 @@ public class TACOAuth2Helper {
 		return new HashMap<String, Object>();
 
 	}
+	
+	
+	
 
 	/**
 	 * 获取一卡通信息
@@ -315,4 +318,23 @@ public class TACOAuth2Helper {
 		}		
 		return ret+startclass(startclass)+"-"+endclass(endclass);
 	}*/
+	
+	/**
+	 * 获取电费信息
+	 * @param accesstoken
+	 * @return
+	 */
+	public static Map<String, Object> electric(String accesstoken) {
+		String urlstr = "https://tac.fudan.edu.cn/resource/electric.act?access_token="
+				+ accesstoken ;
+		try {
+			return (Map<String, Object>) JSON.parse("{\"list\":"
+					+ CommonUtil.getWebContent(urlstr).toString() + "}");
+
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return new HashMap<String, Object>();
+
+	}
 }
