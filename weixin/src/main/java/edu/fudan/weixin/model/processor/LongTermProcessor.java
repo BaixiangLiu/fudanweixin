@@ -76,8 +76,8 @@ public abstract class LongTermProcessor implements MessageProcessor {
 		LongTermRun run = new LongTermRun(msg);
 		Future<JSONMessageBuilder> future=ThreadPoolHelper.getInstance().getSchPool().submit(run);
 		try {
-			//等待4.5s，如果此时间内未返回则由客服接口返回信息
-			JSONMessageBuilder jb= future.get(4500L, TimeUnit.MILLISECONDS);
+			//等待4s，如果此时间内未返回则由客服接口返回信息
+			JSONMessageBuilder jb= future.get(4000L, TimeUnit.MILLISECONDS);
 			if(!CommonUtil.isEmpty(jb))
 				return jb.toXMLMessageBuilder().getMessage();
 			else
