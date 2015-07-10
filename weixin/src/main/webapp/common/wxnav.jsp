@@ -3,8 +3,7 @@
  <%@ taglib uri="/struts-tags" prefix="s"%>
  <div class="navbar navbar-default navbar-collapse"   >
 				<div class="col-xs-2">
-					<a href="javascript:history.back()" style="float: right"><img
-						src="images/back.png" /></a>
+					<a href="javascript:history.back()" style="float: right"><i class="fa fa-arrow-circle-left fa-3x" ></i></a>
 				</div>
 				<div class="col-xs-8 text-center">
 					<h4>
@@ -12,7 +11,7 @@
 					</h4>
 				</div>
 				<div class="col-xs-2">
-					<a href="index.act"><img src="images/home.png" /></a>
+					<a href="index.act"><i class="fa fa-home fa-3x" ></i></a>
 				</div>
 
 			</div>
