@@ -67,7 +67,7 @@ function pay(idx)
       <tr><th>学/工号</th><th>订单金额</th><th>生成时间</th><th>支付</th></tr>
      
       <s:iterator value="unpaid">
-      <tr><td><s:property value="stuempno" /></td><td><s:property value="amount"  /></td><td><s:property value="datetime" /></td><td><a href="pay.act?uisid=<s:property value="stuempno" />" class="btn btn-success" >去支付平台支付</a></td></tr>
+      <tr><td><s:property value="stuempno" /></td><td><s:property value="amount"  /></td><td><s:property value="datetime.substring(0,8)" /></td><td><a href="pay.act?uisid=<s:property value="stuempno" />" class="btn btn-success" >支付</a></td></tr>
       </s:iterator>
     
       </table>
@@ -86,7 +86,7 @@ function pay(idx)
 </label>
  <label class="radio-inline">
   <input type="radio" name="account<s:property value="#lst.index" />" id="account<s:property value="#lst.index" />3" value="0"> 
-  <input type="text"  class="form-control" name="naccount<s:property value="#lst.index" />" id="naccount<s:property value="#lst.index" />"   placeholder="请输入整数金额" />元
+  <input type="text"  class="form-control" name="naccount<s:property value="#lst.index" />" id="naccount<s:property value="#lst.index" />"   placeholder="请输入整数金额" style="width:100px" />元
 </label>
 <button type="button" class="btn btn-warning" onclick="pay(<s:property value="#lst.index" />)">充值</button>
 </form>
