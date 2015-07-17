@@ -16,7 +16,7 @@ public class TestSWEcard {
 	public void query()
 	{
 		//Map<String,Object> m=SWEcardModel.query("", "8738900", null	, null,1,10);
-		Map<String,Object> m=SWEcardModel.query("04538", "", new Date(new Date().getTime()-3600000*24)	, new Date(),1,10);
+		Map<String,Object> m=SWEcardModel.query("04538", "", null	, null,1,10);
 		System.out.println(JSON.toJSON(m));
 		Assert.assertEquals(0,m.get("retcode"));
 		

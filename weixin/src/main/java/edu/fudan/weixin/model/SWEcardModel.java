@@ -63,7 +63,7 @@ public class SWEcardModel {
 					ret.put("retmsg", "CHECKSUM ERROR:");
 				}
 				//把返回的PC用的支付URL转为移动端的URL
-				ret.put("url",String.valueOf( ret.get("url")).replace("2Fpay", "2FpayApp")+"&flag=0");
+				ret.put("url",String.valueOf( ret.get("url")).replace("2Fpay%2F", "2FpayApp%2F")+"&flag=0");
 				
 			}else
 			{
