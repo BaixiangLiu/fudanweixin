@@ -3,7 +3,9 @@
 
     <display-name>Struts Blank</display-name>
 
-
+	<listener>    
+   		<listener-class>edu.fudan.weixin.servlet.ServiceInitListener</listener-class> 
+     </listener>  
 
 	<servlet>
 		<servlet-name>MessageServlet</servlet-name>
