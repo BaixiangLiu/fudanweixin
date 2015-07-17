@@ -57,7 +57,7 @@ function pay(idx)
         </a>
       </h4>
     </div>
-    <div id="collapse<s:property value="#lst.index" />" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading<s:property value="#lst.index" />">
+    <div id="collapse<s:property value="#lst.index" />" class="panel-collapse collapse <s:if test="#lst.first"> in </s:if>" role="tabpanel" aria-labelledby="heading<s:property value="#lst.index" />">
       <div class="panel-body">
       
       <s:if test="unpaid!=null&& unpaid.size()>0">
