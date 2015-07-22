@@ -89,7 +89,7 @@ public class EcardPayAction extends GuestActionBase {
 						String uid = String.valueOf(bm.get("user_id"));
 						if (CommonUtil.eq(uid, uisid)) {
 							found = true;
-							ret = SWEcardModel.order(uid, amount);
+							ret = SWEcardModel.order(String.valueOf(openid),uid, amount);
 						}
 
 					}

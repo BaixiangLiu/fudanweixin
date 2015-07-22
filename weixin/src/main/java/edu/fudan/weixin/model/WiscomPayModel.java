@@ -9,7 +9,7 @@ import edu.fudan.eservice.common.utils.EncodeHelper;
 public class WiscomPayModel {
 	
 	/**
-	 * Éú³ÉÖØ¶¨Ïòµ½½ğÖÇÖ§¸¶Æ½Ì¨µÄÁ´½Ó£¬´ò¿ªÓÃ»§ ËùÓĞ´ı¸¶¿î½çÃæ
+	 * æ˜¾ç¤ºç‰¹å®šç”¨æˆ·çš„æ‰€æœ‰å¾…ä»˜æ¬¾é¡¹
 	 * @param openid
 	 * @param uisid
 	 * @return
@@ -21,7 +21,7 @@ public class WiscomPayModel {
 	
 	
 /**
- * Éú³ÉÖØ¶¨Ïòµ½½ğÖÇÖ§¸¶Æ½Ì¨µÄÁ´½Ó£¬Èç¹ûpwd²»Îª¿ÕÔò´ò¿ªÌØ¶¨´ı¸¶·Ñ¶©µ¥ĞÅÏ¢¡£
+ * å®šå‘åˆ°é‡‘æ™ºæ”¯ä»˜é¡µé¢çš„URLï¼Œpwdä¸ä¸ºç©ºæ—¶å®šå‘åˆ°å…·ä½“çš„å¾…æ”¯ä»˜è®¢å•ä¿¡æ¯é¡µé¢
  * @param openid
  * @param uisid
  * @param pwd

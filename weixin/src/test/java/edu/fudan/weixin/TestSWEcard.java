@@ -25,7 +25,7 @@ public class TestSWEcard {
 	
 	public void testorder()
 	{
-		Map<String,Object> m=SWEcardModel.order("04538", 2);
+		Map<String,Object> m=SWEcardModel.order(null,"04538", 2);
 		System.out.println(JSON.toJSON(m));
 		Assert.assertEquals(0,m.get("retcode"));
 	}

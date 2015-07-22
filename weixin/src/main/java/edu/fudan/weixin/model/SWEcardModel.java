@@ -41,7 +41,7 @@ public class SWEcardModel {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public static Map<String,Object> order(String uid,int amount)
+	public static Map<String,Object> order(String openid,String uid,int amount)
 	{
 		Map<String,Object> ret=new HashMap<String,Object>();
 		String nstr=DF.format(new Date());
@@ -63,7 +63,18 @@ public class SWEcardModel {
 					ret.put("retmsg", "CHECKSUM ERROR:");
 				}
 				//把返回的PC用的支付URL转为移动端的URL
-				ret.put("url",String.valueOf( ret.get("url")).replace("2Fpay%2F", "2FpayApp%2F")+"&flag=0");
+				String url=String.valueOf(ret.get("url"));
+				url=URLDecoder.decode(url, "utf-8");
+				int tk=url.indexOf("pwd=");
+				String pwd=null;
+				if(tk>0)
+					pwd=url.substring(tk+4);
+				else
+					pwd="";
+				tk=pwd.indexOf("&");
+				if(tk>0)
+					pwd=pwd.substring(0, tk);
+				ret.put("url",WiscomPayModel.formupDirecturl(openid, uid, pwd));
 				
 			}else
 			{
