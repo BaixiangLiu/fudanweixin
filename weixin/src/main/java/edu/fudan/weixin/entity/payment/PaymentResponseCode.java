@@ -25,6 +25,8 @@ package edu.fudan.weixin.entity.payment;
  *
  */
 public enum PaymentResponseCode {
+	SIGN_NOTMATCH("-3"),
+	EMPTY_SUMMARY("-2"),
 	INIT_FAIL("-1"),
 	SUCCESS("00"),
 	SUCCESS_DEL("01"),
@@ -52,6 +54,12 @@ public enum PaymentResponseCode {
  	public static PaymentResponseCode translate(String code) {
 		switch(code)
 		{
+			case "-3":
+				return PaymentResponseCode.SIGN_NOTMATCH;
+			case "-2":
+				return PaymentResponseCode.EMPTY_SUMMARY;
+			case "-1":
+				return PaymentResponseCode.INIT_FAIL;
 			case "00":
 				return PaymentResponseCode.SUCCESS;
 			case "01":

@@ -5,21 +5,32 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.alibaba.fastjson.JSON;
+
 import edu.fudan.eservice.common.utils.CommonUtil;
+import edu.fudan.eservice.common.utils.Config;
+import edu.fudan.eservice.common.utils.PaymentUtil;
 
 public class PaymentResult {
+	private String sysCert;
+	
 	private boolean simpleMode;
 	
 	private PaymentResponseCode resultCode;
 	
 	private Map<String, Object> resultSummary;
 	
+//	private Map<String, Object> msg;
+	
 	private List<Map> resultData;
+	
+
 	
 	/**
 	 * @param simpleMode 简单模式仅包含 resultCode
 	 */
 	public PaymentResult(boolean simpleMode) {
+		this.sysCert = Config.getInstance().get("PAYMENT.SYSCERT");
 		this.simpleMode = simpleMode;
 		this.resultCode = PaymentResponseCode.INIT_FAIL;
 		resultSummary = new HashMap<String, Object>();
@@ -51,7 +62,31 @@ public class PaymentResult {
 	}
 
 	public void setResultSummary(Map<String, Object> resultSummary) {
-		this.resultSummary = resultSummary;
+		String[] signParam = {};
+		boolean needSign = true;
+		
+		PaymentResponseCode code = PaymentUtil.getReturnCode(resultSummary);
+
+		switch(code) {
+			case SUCCESS:
+			case SUCCESS_DEL:
+				signParam = PaymentUtil.createResponseSignParam;
+			case PAID:
+			case NOTPAID:
+				signParam = PaymentUtil.singleDetailSignParam;
+			case SUCCESS_BATCH:
+				signParam = PaymentUtil.batchSummarySignParam;
+			default:
+				needSign = false;
+		}
+		
+		if(needSign) {
+			if(PaymentUtil.checkSign(sysCert, signParam, resultSummary))
+				this.resultSummary = resultSummary;
+		} else 
+			this.resultSummary = resultSummary;
+			
+			
 	}
 	
 	public PaymentResponseCode getCodeFromSummary() {
@@ -62,7 +97,7 @@ public class PaymentResult {
 	}
 	
 	public void addResultDetail(Map<String, Object> pd) {
-		if(!CommonUtil.isEmpty(pd))
+		if(PaymentUtil.checkSign(sysCert, PaymentUtil.batchDetailSignParam, pd))
 			resultData.add(pd);
 	}
 	
@@ -74,11 +109,21 @@ public class PaymentResult {
 		StringBuffer sb = new StringBuffer();
 		sb.append("CODE:");
 		sb.append(resultCode);
-		sb.append("\nSUMMARY:\n");
-		sb.append(this.resultSummary.toString());
-		sb.append("\nDATA:");
-		sb.append(this.resultData.size());
-		sb.append("\n");
+		if(!simpleMode) {
+			sb.append("\nSUMMARY:\n");
+			sb.append(this.resultSummary.toString());
+//			if(!CommonUtil.isEmpty(msg)) {
+//				sb.append("\nMSG:\n");
+//				sb.append(this.msg.toString());
+//			}
+			sb.append("\nDATA:");
+			sb.append(this.resultData.size());
+			sb.append("\n");
+			for(Map data : resultData) {
+				sb.append(data.toString());
+				sb.append("\n");
+			}
+		}
 		return sb.toString();
 	}
 }

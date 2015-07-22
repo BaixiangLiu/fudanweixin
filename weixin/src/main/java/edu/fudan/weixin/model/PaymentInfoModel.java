@@ -7,7 +7,9 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.alibaba.fastjson.JSON;
@@ -38,7 +40,7 @@ public class PaymentInfoModel {
 				.getValues();
 
 		StringBuffer params = new StringBuffer("sign=");
-		params.append(pr.createSign());
+		params.append(pr.getSign());
 		for (int i = 0; i < signParameters.length; i++) {
 			Object value = values.get(signParameters[i]);
 			if (value != null) {
@@ -69,17 +71,17 @@ public class PaymentInfoModel {
 	public PaymentResult getResponse(boolean get, String url) throws Exception {
 
 		String urlParameters = this.createURL();
-		if(pr.getClass().getName().equals("edu.fudan.weixin.entity.payment.QueryDeal"))
+		if (pr.getClass().getName()
+				.equals("edu.fudan.weixin.entity.payment.QueryDeal"))
 			get = false;
-		
+
 		URL destURL;
-		if(get) {
+		if (get) {
 			destURL = new URL(url.concat("?").concat(urlParameters));
 		} else {
 			destURL = new URL(url);
 		}
-		
-		
+
 		HttpURLConnection con = (HttpURLConnection) destURL.openConnection();
 
 		// add request header
@@ -88,7 +90,6 @@ public class PaymentInfoModel {
 				"Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.124 Safari/537.36");
 		con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
 
-		
 		// optional default is GET
 		if (get) {
 			con.setRequestMethod("GET");
@@ -106,35 +107,45 @@ public class PaymentInfoModel {
 		BufferedReader in = new BufferedReader(new InputStreamReader(
 				con.getInputStream()));
 		String inputLine;
-		StringBuffer response = new StringBuffer();
-
+		String singleLine = "";
+		List<Map> response = new ArrayList<Map>();
 		while ((inputLine = in.readLine()) != null) {
-			response.append(inputLine);
+			if(inputLine.startsWith("{"))
+				response.add((Map) JSON.parse(inputLine));
+			else
+				singleLine = inputLine;
 		}
 		in.close();
 
 		if (pr.getReturnType().equalsIgnoreCase("data"))
 			return resolveDataResponse(response);
 		else
-			return resolveSimpleResponse(response);
+			return resolveSimpleResponse(singleLine);
 
 	}
 
-	private PaymentResult resolveSimpleResponse(StringBuffer sb) {
+	private PaymentResult resolveSimpleResponse(String result) {
 		PaymentResult pr = new PaymentResult(true);
-		pr.setResultCode(sb.toString());
+		pr.setResultCode(result);
 		return pr;
 	}
 
-	private PaymentResult resolveDataResponse(StringBuffer sb) {
+	private PaymentResult resolveDataResponse(List result) {
 		PaymentResult pr = new PaymentResult(false);
-		String[] results = new String(sb).split("\\n");
-		for(int i=0; i < results.length; i++ ) {
-			if(i == 0)
-				pr.setResultSummary((Map)JSON.parse(results[i]));
-			else
-				pr.addResultDetail((Map)JSON.parse(results[i]));
-		}
+		/*
+		 * System.out.println(sb.toString()); String[] results = new
+		 * String(sb).split("\n"); for(int i=0; i < results.length; i++ ) { if(i
+		 * == 0) pr.setResultSummary((Map)JSON.parse(results[i])); else
+		 * pr.addResultDetail((Map)JSON.parse(results[i])); }
+		 * System.out.println(sb.toString()); Object result = JSON.parse(new
+		 * String(sb));
+		 */
+
+		pr.setResultSummary((Map) result.get(0));
+
+		for (int i = 1; i < result.size(); i++)
+			pr.addResultDetail((Map) result.get(i));
+
 		pr.setResultCode(pr.getCodeFromSummary());
 		return pr;
 	}

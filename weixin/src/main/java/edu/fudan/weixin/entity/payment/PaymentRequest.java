@@ -9,6 +9,7 @@ import java.util.Map;
 import edu.fudan.eservice.common.utils.CommonUtil;
 import edu.fudan.eservice.common.utils.Config;
 import edu.fudan.eservice.common.utils.EncodeHelper;
+import edu.fudan.eservice.common.utils.PaymentUtil;
 
 public abstract class PaymentRequest implements Serializable{
 
@@ -24,8 +25,19 @@ public abstract class PaymentRequest implements Serializable{
 	private String[] signParameters;
 	
 	private String[] otherParameters;
+	
+	private String sign;
 		
 	
+	public String getSign() {
+		setSign(PaymentUtil.createSign(sysCert, signParameters, values));
+		return sign;
+	}
+
+	public void setSign(String sign) {
+		this.sign = sign;
+	}
+
 	public String[] getSignParameters() {
 		return signParameters;
 	}
@@ -76,29 +88,6 @@ public abstract class PaymentRequest implements Serializable{
 		values = new HashMap<String, Object>();
 		//默认返回数据为 data 方式
 		setReturnType("data");
-	}
-
-	/**
-	 * 生成签名字串
-	 * @return 
-	 */
-	public String createSign() {
-		char firstSC = sysCert.charAt(0);
-		
-		StringBuffer buf = new StringBuffer(512);
-		for (int i = 0; i < this.signParameters.length; i++) 
-		{
-			Object value = this.values.get(this.signParameters[i]);
-			//即使参数为空依然添加首字母
-			buf.append(firstSC);
-			if (value == null) 
-			{
-				continue;
-			}
-			buf.append(value);
-		}
-		buf.append(sysCert);
-		return EncodeHelper.digest(buf.toString(), "MD5");
 	}
 	
 	public void setValue(String key, String value) {
