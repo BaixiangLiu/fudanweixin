@@ -29,11 +29,21 @@ function pay(idx)
 	$.post("ecardpay.act",{"uisid":$("#uisid"+idx).val(),"amount":amount},
 	function (data){
 		if(data.retcode==0) 
-			location=decodeURIComponent(data.url);
+			location=data.url;
 		else
 			alert(data.retmsg);
 	},"json"	);
-	}
+}
+function pwd(p)
+{
+	$.post("ecardpwd.act",{"uisid":p},
+			function (data){
+				if(data.retcode==0) 
+					location=data.url;
+				else
+					alert(data.retmsg);
+			},"json"	);
+}
 </script>
 
 </head>
@@ -67,7 +77,7 @@ function pay(idx)
       <tr><th>学/工号</th><th>订单金额</th><th>生成时间</th><th>支付</th></tr>
      
       <s:iterator value="unpaid">
-      <tr><td><s:property value="stuempno" /></td><td><s:property value="amount"  /></td><td><s:property value="datetime.substring(0,8)" /></td><td><a href="pay.act?uisid=<s:property value="stuempno" />" class="btn btn-success" >支付</a></td></tr>
+      <tr><td><s:property value="stuempno" /></td><td><s:property value="amount"  /></td><td><s:property value="datetime.substring(0,8)" /></td><td><button class="btn btn-success" onclick="pwd('<s:property value="payid" />')">支付</button></td></tr>
       </s:iterator>
     
       </table>

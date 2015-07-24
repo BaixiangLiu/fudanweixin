@@ -114,6 +114,62 @@ public class EcardPayAction extends GuestActionBase {
 
 		return NONE;
 	}
+	
+	/**
+	 * 通过PWD跳转到支付页面
+	 * @return
+	 * @throws IOException
+	 */
+	@Action("ecardpwd")
+	public String pwd() throws IOException {
+		Object openid = getSession().get("openid");
+		HttpServletResponse resp = org.apache.struts2.ServletActionContext
+				.getResponse();
+		Map<String, Object> ret = new HashMap<String, Object>();
+		if (!CommonUtil.isEmpty(openid)) {
+			DBObject payinfo=SWEcardModel.getPwd(uisid);
+			DBObject user = MongoUtil.getInstance().getDB()
+					.getCollection("Bindings")
+					.findOne(new BasicDBObject("openid", openid));
+			binds = new TACOAuth2Model().fetchUserinfo(user);
+			if (binds != null && binds.size() > 0) {
+				boolean found = false;
+				for (Object b : binds) {
+					if (b instanceof Map) {
+						Map bm = (Map) b;
+						String uid = String.valueOf(bm.get("user_id"));
+						if (CommonUtil.eq(uid, payinfo.get("uisid"))) {
+							found = true;
+						}
+
+					}
+				}
+				if (!found){
+					addActionError("订单的UISID不匹配");
+				}
+				else
+				{
+					ret.put("retcode", 0);
+					ret.put("url",WiscomPayModel.formupDirecturl(String.valueOf(openid), String.valueOf(payinfo.get("uisid")), String.valueOf(payinfo.get("pwd"))));
+				}
+
+			} else {
+				addActionError(" 尚未对任何账号授权");
+			}
+
+		} else {
+			addActionError("尚未登录");
+		}
+		if (hasErrors()) {
+			
+			ret.put("retcode", -500);
+			ret.put("retmsg", getActionErrors());
+		}
+		resp.setCharacterEncoding("utf-8");
+		JSON.writeJSONStringTo(ret, resp.getWriter());
+
+		return NONE;
+	}
 
 	public List getBinds() {
 		return binds;

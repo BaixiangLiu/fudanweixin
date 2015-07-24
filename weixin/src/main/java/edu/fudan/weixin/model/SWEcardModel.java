@@ -17,10 +17,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSON;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 
 import edu.fudan.eservice.common.utils.CommonUtil;
 import edu.fudan.eservice.common.utils.Config;
 import edu.fudan.eservice.common.utils.EncodeHelper;
+import edu.fudan.eservice.common.utils.MongoUtil;
 
 /**
  * 树维一卡通接口
@@ -74,6 +77,14 @@ public class SWEcardModel {
 				tk=pwd.indexOf("&");
 				if(tk>0)
 					pwd=pwd.substring(0, tk);
+				
+				//保存pwd和payid的对应关系
+				DBObject dbo=new BasicDBObject();
+				dbo.put("pwd", pwd);
+				dbo.put("payid", ret.get("payid"));
+				dbo.put("uisid", uid);
+				MongoUtil.getInstance().getCollection("ecardpay").save(dbo);
+				
 				ret.put("url",WiscomPayModel.formupDirecturl(openid, uid, pwd));
 				
 			}else
@@ -144,7 +155,7 @@ public class SWEcardModel {
 	 */
 	public static List<Map<String,Object>> unpaid(String uid)
 	{
-		Map<String,Object> oret=query(uid,null,null,null,1,10);
+		Map<String,Object> oret=query(uid,null,new Date(System.currentTimeMillis()-3600000L*24*15),null,1,10);
 		if(oret.get("retcode").equals(0))
 		{
 			Object ords=oret.get("data");
@@ -162,12 +173,17 @@ public class SWEcardModel {
 						if(!"待付款".equals(order.get("status")))
 							i.remove();
 					}
-					return (List<Map<String,Object>>)ords;
+					
 				}
-				
+				return (List<Map<String,Object>>)ords;
 			}
 		}
 		return new ArrayList<Map<String,Object>>(0);
 	}
 
+	public static DBObject getPwd(String payid)
+	{
+		return MongoUtil.getInstance().getCollection("ecardpay").findOne(new BasicDBObject("payid",payid));
+		
+	}
 }
