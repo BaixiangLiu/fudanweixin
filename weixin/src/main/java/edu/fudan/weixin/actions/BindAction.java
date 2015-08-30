@@ -148,7 +148,7 @@ public class BindAction extends GuestActionBase {
 				addActionError("Error in Weixin OAuth2: " + e.getMessage());
 			}
 		} else {
-			addActionError("该绑定请求的来源可能有风险，请通过“复旦信息办”微信公众账号获取最新的绑定链接！");
+			addActionError("请升级微信至最新版本，并确保在微信中打开相应链接，使用老版本微信或者外部浏览器无法获得完整信息。");
 		}
 		return SUCCESS;
 
