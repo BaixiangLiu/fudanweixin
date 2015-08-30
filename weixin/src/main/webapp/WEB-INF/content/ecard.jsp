@@ -62,6 +62,7 @@ $(
 					</div>
 					<p align="center">
 					<a class="btn btn-success btn-sm"  href="ecarddaily.act">日交易额查询</a>
+					<a class="btn btn-success btn-sm"  href="ecardpre.act">一卡通充值</a>
 					</p>
 				</div>
 
